@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 @Entity
 public class Document {
     @Id
-    private int docId;
+    private Long docId;
     private String docName;
     private LocalDate uploadDate;
     @Lob
@@ -16,18 +16,18 @@ public class Document {
     public Document() {
     }
 
-    public Document(int docId, String docName, LocalDate uploadDate, byte[] data) {
+    public Document(Long docId, String docName, LocalDate uploadDate, byte[] data) {
         this.docId = docId;
         this.docName = docName;
         this.uploadDate = uploadDate;
         this.data = data;
     }
 
-    public int getDocId() {
+    public Long getDocId() {
         return docId;
     }
 
-    public void setDocId(int docId) {
+    public void setDocId(Long docId) {
         this.docId = docId;
     }
 

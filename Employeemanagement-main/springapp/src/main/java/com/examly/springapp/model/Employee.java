@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 @Entity
 public class Employee {
         @Id
-        private int id;
+        private Long id;
         private String name;
         private String mail;
         private String phone;
@@ -18,7 +18,7 @@ public class Employee {
         }
 
 
-        public Employee(int id, String name, String mail, String phone, String address, String dateOfJoining,
+        public Employee(Long id, String name, String mail, String phone, String address, String dateOfJoining,
                 int jobRoleId) {
             this.id = id;
             this.name = name;
@@ -30,12 +30,12 @@ public class Employee {
         }
 
 
-        public int getId() {
+        public Long getId() {
             return id;
         }
 
 
-        public void setId(int id) {
+        public void setId(Long id) {
             this.id = id;
         }
 
