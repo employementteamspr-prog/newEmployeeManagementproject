@@ -1,4 +1,11 @@
 package com.examly.springapp.repository;
-public class DepartmentRepo {
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.examly.springapp.model.Department;
+
+
+public interface DepartmentRepo extends JpaRepository<Department, Long>{
+
     
 }

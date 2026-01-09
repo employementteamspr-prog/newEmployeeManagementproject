@@ -9,7 +9,7 @@ import jakarta.persistence.Id;
 public class Department {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private int departmentId;
+    private Long departmentId;
     private String departmentName;
     private String description;
 
@@ -21,11 +21,11 @@ public class Department {
         this.description = description;
     }
 
-    public int getDepartmentId() {
+    public Long getDepartmentId() {
         return departmentId;
     }
 
-    public void setDepartmentId(int departmentId) {
+    public void setDepartmentId(Long departmentId) {
         this.departmentId = departmentId;
     }
 

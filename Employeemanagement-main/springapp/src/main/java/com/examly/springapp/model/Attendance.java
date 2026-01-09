@@ -10,7 +10,7 @@ import jakarta.persistence.Id;
 public class Attendance {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private int attendanceId;
+    private Long attendanceId;
     private String clockIntTime;
     private String clockoutTime;
     private String location;
@@ -26,11 +26,11 @@ public class Attendance {
         this.location = location;
     }
 
-    public int getAttendanceId() {
+    public Long getAttendanceId() {
         return attendanceId;
     }
 
-    public void setAttendanceId(int attendanceId) {
+    public void setAttendanceId(Long attendanceId) {
         this.attendanceId = attendanceId;
     }
 

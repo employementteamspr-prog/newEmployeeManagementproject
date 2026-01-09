@@ -6,7 +6,7 @@ import com.examly.springapp.model.JobDescription;
 
 
 
-public interface JobDescriptionRepo extends JpaRepository<JobDescription, Integer> {
+public interface JobDescriptionRepo extends JpaRepository<JobDescription, Long> {
 
     
 }

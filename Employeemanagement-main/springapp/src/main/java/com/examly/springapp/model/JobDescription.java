@@ -11,7 +11,7 @@ import jakarta.persistence.ManyToOne;
 public class JobDescription{
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private int jobRoleId;
+    private Long jobRoleId;
     private String jobTitle;
     private String responsibilities;
     @ManyToOne
@@ -27,11 +27,11 @@ public class JobDescription{
         this.responsibilities = responsibilities;
     }
 
-    public int getJobRoleId() {
+    public Long getJobRoleId() {
         return jobRoleId;
     }
 
-    public void setJobRoleId(int jobRoleId) {
+    public void setJobRoleId(Long jobRoleId) {
         this.jobRoleId = jobRoleId;
     }
 
