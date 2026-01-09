@@ -92,4 +92,9 @@ public class ReviewServiceImpl implements ReviewService {
             return false;
         }
     }
+
+    @Override
+    public List<Review> getAllReviews() {
+        return reviewRepository.findAll();
+    }
 }

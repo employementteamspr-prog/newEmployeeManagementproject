@@ -9,18 +9,18 @@ public class Review {
     private Long reviewId;
     private Long reviewerId;
     private String comments;
-    private int review;
+    private int rating;
     private LocalDate reviewDate;
 
     
     public Review() {
     }
 
-    public Review(Long reviewId, Long reviewerId, String comments, int review, LocalDate reviewDate) {
+    public Review(Long reviewId, Long reviewerId, String comments, int rating, LocalDate reviewDate) {
         this.reviewId = reviewId;
         this.reviewerId = reviewerId;
         this.comments = comments;
-        this.review = review;
+        this.rating = rating;
         this.reviewDate = reviewDate;
     }
 
@@ -48,12 +48,12 @@ public class Review {
         this.comments = comments;
     }
 
-    public int getReview() {
-        return review;
+    public int getRating() {
+        return rating;
     }
 
-    public void setReview(int review) {
-        this.review = review;
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 
     public LocalDate getReviewDate() {

@@ -43,8 +43,8 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public Document getDocumentByName(String name) {
-        Document document = documentRepository.findByDocumentName(name);
+    public Document getDocumentByName(String docName) {
+        Document document = documentRepository.findBydocName(docName);
 
         if (document != null) {
             return document;

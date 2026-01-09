@@ -1,5 +1,7 @@
 package com.examly.springapp.model;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -10,7 +12,7 @@ public class Employee {
         private String mail;
         private String phone;
         private String address;
-        private String dateOfJoining;
+        private LocalDate dateOfJoining;
         private Long jobRoleId;
 
         
@@ -18,7 +20,7 @@ public class Employee {
         }
 
 
-        public Employee(Long id, String name, String mail, String phone, String address, String dateOfJoining,
+        public Employee(Long id, String name, String mail, String phone, String address, LocalDate dateOfJoining,
                 Long jobRoleId) {
             this.id = id;
             this.name = name;
@@ -80,12 +82,12 @@ public class Employee {
         }
 
 
-        public String getDateOfJoining() {
+        public LocalDate getDateOfJoining() {
             return dateOfJoining;
         }
 
 
-        public void setDateOfJoining(String dateOfJoining) {
+        public void setDateOfJoining(LocalDate dateOfJoining) {
             this.dateOfJoining = dateOfJoining;
         }
 

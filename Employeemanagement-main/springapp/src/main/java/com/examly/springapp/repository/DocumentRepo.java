@@ -10,7 +10,7 @@ import com.examly.springapp.model.Document;
 @Repository
 public interface DocumentRepo extends JpaRepository<Document,Long> {
                  
-    Document findByDocumentName(String documentName);
+    Document findBydocName(String docName);
 
     Document findByUploadDate(LocalDate uploadDate);
 

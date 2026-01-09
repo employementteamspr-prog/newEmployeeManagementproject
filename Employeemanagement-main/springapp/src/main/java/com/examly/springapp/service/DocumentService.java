@@ -14,7 +14,7 @@ public interface DocumentService {
 
        Document getDocumentById(Long id);
 
-       Document getDocumentByName(String name);
+       Document getDocumentByName(String docName);
 
        Document getDocumentByDate(LocalDate localDate);
 

@@ -11,6 +11,8 @@ public interface ReviewService {
 
     List<Review> saveReviews(List<Review> reviews);
 
+    List<Review> getAllReviews();
+
     Review getReviewById(Long id);
 
     Review getReviewByRating(int rating);
