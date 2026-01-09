@@ -11,7 +11,7 @@ public class Employee {
         private String phone;
         private String address;
         private String dateOfJoining;
-        private int jobRoleId;
+        private Long jobRoleId;
 
         
         public Employee() {
@@ -19,7 +19,7 @@ public class Employee {
 
 
         public Employee(Long id, String name, String mail, String phone, String address, String dateOfJoining,
-                int jobRoleId) {
+                Long jobRoleId) {
             this.id = id;
             this.name = name;
             this.mail = mail;
@@ -90,12 +90,12 @@ public class Employee {
         }
 
 
-        public int getJobRoleId() {
+        public Long getJobRoleId() {
             return jobRoleId;
         }
 
 
-        public void setJobRoleId(int jobRoleId) {
+        public void setJobRoleId(Long jobRoleId) {
             this.jobRoleId = jobRoleId;
         }
   

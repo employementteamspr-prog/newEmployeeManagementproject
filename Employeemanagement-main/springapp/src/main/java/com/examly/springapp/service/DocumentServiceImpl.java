@@ -22,7 +22,7 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public List<Document> savDocuments(List<Document> documents) {
+    public List<Document> saveDocuments(List<Document> documents) {
         return documentRepository.saveAll(documents);
     }
 

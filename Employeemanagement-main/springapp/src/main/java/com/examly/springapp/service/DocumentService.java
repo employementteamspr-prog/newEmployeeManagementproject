@@ -8,7 +8,7 @@ import com.examly.springapp.model.Document;
 public interface DocumentService {
        Document saveDocument(Document document);
        
-       List<Document> savDocuments(List<Document> documents);
+       List<Document> saveDocuments(List<Document> documents);
 
        List<Document> getDocuments();
 

@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.examly.springapp.model.Review;
 
-public interface ReviewRepo extends JpaRepository<Review,Integer> {
+public interface ReviewRepo extends JpaRepository<Review,Long> {
     Review findByRating(int rating);
 
     Review findByReviewDate(LocalDate reviewDate);
