@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.examly.springapp.model.Salary;
-@Repository
-public interface SalaryRepo extends JpaRepository<Salary, Integer>{
+import com.examly.springapp.model.Leave;
 
-    List<Salary> findByMonth( int month);
+@Repository
+public interface LeaveRepo extends JpaRepository<Leave,Integer> {
+    List<Leave> findLeaveByStatus(String status);
 }
