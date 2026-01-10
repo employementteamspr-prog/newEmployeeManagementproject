@@ -10,7 +10,7 @@ import com.examly.springapp.repository.DepartmentRepo;
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
 
-    private final DepartmentRepo departmentRepo;
+    private DepartmentRepo departmentRepo;
 
     public DepartmentServiceImpl(DepartmentRepo departmentRepo) {
         this.departmentRepo = departmentRepo;
@@ -49,5 +49,15 @@ public class DepartmentServiceImpl implements DepartmentService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<Department> addDepartments(List<Department> departments) {
+        return departmentRepo.saveAll(departments);
+    }
+
+    @Override
+    public Department getDepartmentByDepartmentName(String departmentName) {
+        return departmentRepo.findByDepartmentName(departmentName);
     }
 }

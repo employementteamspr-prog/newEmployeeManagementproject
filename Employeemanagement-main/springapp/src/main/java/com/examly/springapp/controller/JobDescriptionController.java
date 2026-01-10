@@ -12,37 +12,48 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.examly.springapp.model.Attendance;
-import com.examly.springapp.service.AttendanceService;
-
+import com.examly.springapp.model.JobDescription;
+import com.examly.springapp.service.JobDescriptionService;
 @RestController
 @RequestMapping("/jobdescription")
 public class JobDescriptionController {
+
     @Autowired
-    private AttendanceService attendanceService;
+    private JobDescriptionService jobDescriptionService;
 
+    // Add JobDescription
     @PostMapping("/add")
-    public Attendance addAttendance(@RequestBody Attendance attendance) {
-        return attendanceService.addAttendence(attendance);
+    public JobDescription addJobDescription(@RequestBody JobDescription jobDescription) {
+        return jobDescriptionService.addJobDescription(jobDescription);
     }
 
+    // Get By Id
     @GetMapping("/get/{id}")
-    public Attendance getAttendanceById(@PathVariable Long id) {
-        return attendanceService.getAttendenceById(id);
+    public JobDescription getJobDescriptionById(@PathVariable Long id) {
+        return jobDescriptionService.getJobDescriptionById(id);
     }
 
+    // Get All JobDescriptions
     @GetMapping("/getAll")
-    public List<Attendance> getAllAttendances() {
-        return attendanceService.getAllAttendences();
+    public List<JobDescription> getAllJobDescriptions() {
+        return jobDescriptionService.getAllJobDescriptions();
     }
 
+    // Get Job Description By Department
+    @GetMapping("/getByDepartment/{departmentId}")
+    public List<JobDescription> getJobDescriptionsByDepartment(@PathVariable Long departmentId) {
+        return jobDescriptionService.getJobDescriptionsByDepartment(departmentId);
+    }
+
+    // Update JobDescription
     @PutMapping("/update/{id}")
-    public Attendance updateAttendance(@PathVariable Long id, @RequestBody Attendance attendance) {
-        return attendanceService.updateAttendence(id, attendance);
+    public JobDescription updateJobDescription(@PathVariable Long id, @RequestBody JobDescription updatedJobDescription) {
+        return jobDescriptionService.updateJobDescription(id, updatedJobDescription);
     }
 
+    // Delete JobDescription
     @DeleteMapping("/delete/{id}")
-    public boolean deleteAttendance(@PathVariable Long id) {
-        return attendanceService.deleteAttendence(id);
+    public boolean deleteJobDescription(@PathVariable Long id) {
+        return jobDescriptionService.deleteJobDescription(id);
     }
 }

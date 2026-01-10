@@ -8,20 +8,21 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 @Entity
 public class Attendance {
+
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long attendanceId;
-    private String clockIntTime;
-    private String clockoutTime;
+
+    private String clockInTime;
+    private String clockOutTime;
     private String location;
     private LocalDate date;
 
-    public Attendance() {
-    }
+    public Attendance() {}
 
-    public Attendance(String clockIntTime, String clockoutTime, LocalDate date, String location) {
-        this.clockIntTime = clockIntTime;
-        this.clockoutTime = clockoutTime;
+    public Attendance(String clockInTime, String clockOutTime, LocalDate date, String location) {
+        this.clockInTime = clockInTime;
+        this.clockOutTime = clockOutTime;
         this.date = date;
         this.location = location;
     }
@@ -34,20 +35,20 @@ public class Attendance {
         this.attendanceId = attendanceId;
     }
 
-    public String getClockIntTime() {
-        return clockIntTime;
+    public String getClockInTime() {
+        return clockInTime;
     }
 
-    public void setClockIntTime(String clockIntTime) {
-        this.clockIntTime = clockIntTime;
+    public void setClockInTime(String clockInTime) {
+        this.clockInTime = clockInTime;
     }
 
-    public String getClockoutTime() {
-        return clockoutTime;
+    public String getClockOutTime() {
+        return clockOutTime;
     }
 
-    public void setClockoutTime(String clockoutTime) {
-        this.clockoutTime = clockoutTime;
+    public void setClockOutTime(String clockOutTime) {
+        this.clockOutTime = clockOutTime;
     }
 
     public String getLocation() {
@@ -65,5 +66,4 @@ public class Attendance {
     public void setDate(LocalDate date) {
         this.date = date;
     }
-    
 }

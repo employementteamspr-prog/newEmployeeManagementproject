@@ -32,8 +32,8 @@ public class AttendanceServiceImpl implements AttendanceService{
         Attendance existingAttendence = attendanceRepo.findById(attendenceId).orElse(null);
         if (existingAttendence != null) {
             existingAttendence.setDate(attendence.getDate());
-            existingAttendence.setClockIntTime(attendence.getClockIntTime());
-            existingAttendence.setClockoutTime(attendence.getClockoutTime());
+            existingAttendence.setClockInTime(attendence.getClockInTime());
+            existingAttendence.setClockOutTime(attendence.getClockOutTime());
             existingAttendence.setLocation(attendence.getLocation());
             
             existingAttendence.setDate(attendence.getDate());
@@ -54,8 +54,18 @@ public class AttendanceServiceImpl implements AttendanceService{
         return attendanceRepo.findByDate(date);
     }
 
-    
+    @Override
+    public List<Attendance> addAttendences(List<Attendance> attendences) {
+        return attendanceRepo.saveAll(attendences);
+    }
 
-    
-    
+    @Override
+    public List<Attendance> getAttendancesByClockInTime(String clockInTime) {
+        return attendanceRepo.findByClockInTime(clockInTime);
+    }
+
+    @Override
+    public List<Attendance> getAttendancesByClockOutTime(String clockOutTime) {
+        return attendanceRepo.findByClockOutTime(clockOutTime);
+    }
 }

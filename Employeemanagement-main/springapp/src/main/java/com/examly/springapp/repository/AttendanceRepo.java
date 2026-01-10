@@ -10,5 +10,9 @@ public interface  AttendanceRepo extends JpaRepository<Attendance, Long>{
 
     public List<Attendance> findByDate(String date);
 
+    public List<Attendance> findByClockInTime(String clockInTime);
+
+    public List<Attendance> findByClockOutTime(String clockOutTime);
+
     
 }

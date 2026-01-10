@@ -11,4 +11,7 @@ public interface AttendanceService {
     Attendance updateAttendence(Long attendenceId, Attendance attendence);
     boolean deleteAttendence(Long   attendenceId);
     List<Attendance> getAttendenceByDate(String date);
-}
+    List<Attendance> addAttendences(List<Attendance> attendences);
+    List<Attendance> getAttendancesByClockInTime(String clockInTime);
+    List<Attendance> getAttendancesByClockOutTime(String clockOutTime);
+} 
