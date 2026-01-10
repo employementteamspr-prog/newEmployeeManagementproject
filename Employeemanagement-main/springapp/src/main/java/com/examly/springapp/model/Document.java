@@ -11,6 +11,7 @@ public class Document {
     private String docName;
     private LocalDate uploadDate;
     @Lob
+    @Column(columnDefinition = "LONGBLOB")
     private byte[] data;
     
     public Document() {

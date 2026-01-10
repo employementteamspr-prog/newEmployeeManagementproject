@@ -18,9 +18,11 @@ public interface DocumentService {
 
        Document getDocumentByDate(LocalDate localDate);
 
-       Document updateDocumentById(Long id);
+       Document updateDocumentById(Long id,Document document);
 
        boolean deleteDocuments();
 
        boolean deleteDocumentById(Long id);
+
+       boolean deleteDocumentByName(String name);
 }

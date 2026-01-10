@@ -10,11 +10,15 @@ import com.examly.springapp.model.Document;
 @Repository
 public interface DocumentRepo extends JpaRepository<Document,Long> {
                  
-    Document findBydocName(String docName);
-
-    Document findByUploadDate(LocalDate uploadDate);
+    
 
     Optional<Document> findById(Long id);
 
     void deleteById(Long id);
+
+    void deleteBydocName(String name);
+
+    Document findByUploadDate(LocalDate localDate);
+
+    Document findBydocName(String docName);
 }

@@ -65,7 +65,7 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
    @Override
-public Document updateDocumentById(Long id) {
+public Document updateDocumentById(Long id,Document document1) {
 
     if (id != null) {
         Document document = documentRepository.findById(id).orElse(null);
@@ -110,4 +110,20 @@ public boolean deleteDocumentById(Long id) {
     }
 }
 
+@Override
+public boolean deleteDocumentByName(String name) {
+   
+    if (name != null) {
+        Document document = documentRepository.findBydocName(name);
+
+        if (document != null) {
+            documentRepository.deleteBydocName(name);
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
+}
 }
