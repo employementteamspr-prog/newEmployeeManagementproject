@@ -241,4 +241,25 @@ public class DocumentController {
 
         return new ResponseEntity<>("No documents available", HttpStatus.NO_CONTENT);
     }
+
+    // ===============================
+// PAGINATION + SORTING
+// ===============================
+@GetMapping("/paginated")
+public ResponseEntity<Page<Document>> getDocumentsPaginated(
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "5") int size,
+        @RequestParam(defaultValue = "uploadDate") String sortBy,
+        @RequestParam(defaultValue = "asc") String direction) {
+
+    Page<Document> documents =
+            documentService.getDocumentsPaginated(page, size, sortBy, direction);
+
+    if (!documents.isEmpty()) {
+        return new ResponseEntity<>(documents, HttpStatus.OK);
+    }
+
+    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+}
+
 }

@@ -4,6 +4,7 @@ package com.examly.springapp.repository;
 import java.time.LocalDate;
 import java.util.Optional;
 
+import org.hibernate.query.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -23,4 +24,7 @@ public interface DocumentRepo extends JpaRepository<Document,Long> {
     Document findByUploadDate(LocalDate localDate);
 
     Document findBydocName(String docName);
+
+    // ✅ Pagination + Sorting support
+    Page<Document> findAll(Pageable pageable);
 }
