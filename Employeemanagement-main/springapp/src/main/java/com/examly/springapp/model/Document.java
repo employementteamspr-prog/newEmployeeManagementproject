@@ -1,10 +1,5 @@
 package com.examly.springapp.model;
 
-<<<<<<< HEAD
-public class Document {
-    
-}
-=======
 import java.time.LocalDate;
 
 import jakarta.persistence.*;
@@ -62,4 +57,4 @@ public class Document {
     }
     
 }
->>>>>>> 8db20400df5488e55e17061a4d64e79d36c54ebe
+

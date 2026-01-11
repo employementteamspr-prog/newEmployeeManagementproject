@@ -1,10 +1,5 @@
 package com.examly.springapp.service;
 
-<<<<<<< HEAD
-public class DocumentServiceImpl {
-    
-}
-=======
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -132,4 +127,3 @@ public boolean deleteDocumentByName(String name) {
     }
 }
 }
->>>>>>> 8db20400df5488e55e17061a4d64e79d36c54ebe

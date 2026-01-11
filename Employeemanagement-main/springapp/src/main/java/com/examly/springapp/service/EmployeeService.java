@@ -1,10 +1,5 @@
 package com.examly.springapp.service;
 
-<<<<<<< HEAD
-public class EmployeeService {
-    
-}
-=======
 import java.time.LocalDate;
 import java.util.List;
 
@@ -32,4 +27,3 @@ public interface EmployeeService {
 
     boolean deleteEmployees();
 } 
->>>>>>> 8db20400df5488e55e17061a4d64e79d36c54ebe

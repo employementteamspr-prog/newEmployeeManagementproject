@@ -1,10 +1,6 @@
 package com.examly.springapp.repository;
-<<<<<<< HEAD
 
-public class DocumentRepo {
-    
-}
-=======
+
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -28,4 +24,3 @@ public interface DocumentRepo extends JpaRepository<Document,Long> {
 
     Document findBydocName(String docName);
 }
->>>>>>> 8db20400df5488e55e17061a4d64e79d36c54ebe

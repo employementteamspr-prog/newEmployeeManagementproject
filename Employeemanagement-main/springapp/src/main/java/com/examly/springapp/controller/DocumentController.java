@@ -1,10 +1,6 @@
 package com.examly.springapp.controller;
 
-<<<<<<< HEAD
-public class DocumentController {
-    
-}
-=======
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -246,4 +242,3 @@ public class DocumentController {
         return new ResponseEntity<>("No documents available", HttpStatus.NO_CONTENT);
     }
 }
->>>>>>> 8db20400df5488e55e17061a4d64e79d36c54ebe

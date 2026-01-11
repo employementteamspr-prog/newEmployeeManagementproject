@@ -1,10 +1,5 @@
 package com.examly.springapp.repository;
 
-<<<<<<< HEAD
-public class EmployeeRepo {
-    
-}
-=======
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -23,4 +18,3 @@ public interface EmployeeRepo extends JpaRepository<Employee,Long>{
 
     void deleteById(Long id);
 }
->>>>>>> 8db20400df5488e55e17061a4d64e79d36c54ebe
