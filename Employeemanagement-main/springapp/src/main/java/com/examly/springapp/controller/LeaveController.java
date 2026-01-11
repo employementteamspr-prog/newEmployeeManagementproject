@@ -19,13 +19,13 @@ import com.examly.springapp.model.Leave;
 import com.examly.springapp.service.LeaveService;
 
 @RestController
-@RequestMapping("/leave")
+@RequestMapping("/api")
 public class LeaveController {
     @Autowired 
     private LeaveService leaveService;
 
     // POST ONE LEAVE
-    @PostMapping
+    @PostMapping("/leave")
     public ResponseEntity<Leave> applyLeave(@RequestBody Leave leave) {
         try{
             Leave savedLeave = leaveService.saveLeave(leave);
@@ -36,7 +36,7 @@ public class LeaveController {
     }
     
     //POST MULTIPLE LEAVE
-    @PostMapping("/multiple")
+    @PostMapping("/leaves")
     public ResponseEntity<List<Leave>> applyMultipleLeaves(@RequestBody List<Leave> leave) {
         try{
             List<Leave> savedLeaves = leaveService.saveAllLeave(leave);
@@ -47,7 +47,7 @@ public class LeaveController {
     }
 
     //GET ALL LEAVES
-    @GetMapping
+    @GetMapping("/leaves")
     public ResponseEntity<List<Leave>> getAllLeaves(){
         List<Leave> leaves=leaveService.getAllLeave();
         if(leaves.isEmpty()){
@@ -57,7 +57,7 @@ public class LeaveController {
     }
 
     //GET LEAVE BY ID
-    @GetMapping("/{leaveId}")
+    @GetMapping("/leave/{leaveId}")
     public ResponseEntity<Leave> getLeaveById(@PathVariable int leaveId){
         Leave leave=leaveService.getByLeaveId(leaveId);
         if(leave==null){
@@ -77,7 +77,7 @@ public class LeaveController {
     }
 
     //UPDATE LEAVE BY ID
-    @PutMapping("/{leaveId}")   
+    @PutMapping("/leave/{leaveId}")   
     public ResponseEntity<Leave> updateLeaveById(@PathVariable int leaveId, @RequestBody Leave leave){
         Leave updatedLeave=leaveService.updateLeaveById(leaveId, leave);
         if(updatedLeave==null){
@@ -87,7 +87,7 @@ public class LeaveController {
     }
 
     //DELETE LEAVE BY ID
-    @DeleteMapping("/{leaveId}")    
+    @DeleteMapping("/leave/{leaveId}")    
     public ResponseEntity<String> deleteLeaveById(@PathVariable int leaveId){
         boolean isDeleted=leaveService.deleteLeaveById(leaveId);
         if(isDeleted){
@@ -97,14 +97,14 @@ public class LeaveController {
     }
 
     //delete all
-    @DeleteMapping("/all")
+    @DeleteMapping("/leaves")
         public ResponseEntity<Void> deleteAllLeaves(){
             leaveService.deleteAllLeaves();
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
     //BY PAGINATION AND SORTING
-    @GetMapping("/page_sort")
+    @GetMapping("/leave/page_sort")
     public ResponseEntity<List<Leave>> getLeaves(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
@@ -115,7 +115,7 @@ public class LeaveController {
             return new ResponseEntity<>(leaves, HttpStatus.OK);
     }
     //pagination
-    @GetMapping("/page")
+    @GetMapping("/leave/page")
     public ResponseEntity<List<Leave>> getLeavesByPage(
         @RequestParam(defaultValue = "0") int page,
         @RequestParam(defaultValue = "10") int size) {
@@ -125,7 +125,7 @@ public class LeaveController {
         }
 
         //Sorting
-    @GetMapping("/sort")
+    @GetMapping("/leave/sort")
     public ResponseEntity<List<Leave>> getLeavesBySort(
         @RequestParam(defaultValue = "id") String field,
         @RequestParam(defaultValue = "asc") String direction) {
