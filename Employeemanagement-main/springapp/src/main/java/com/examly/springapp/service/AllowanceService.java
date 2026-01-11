@@ -32,4 +32,17 @@ public interface AllowanceService {
 
     // DELETE ALLOWANCE BY ID 
     boolean deleteAllowanceById(int allowanceId);
+
+    //DELETE ALL ALLOWANCES
+    void deleteAllAllowances();
+
+    //Pagination
+    List<Allowance> getAllowanceByPagination(int offset,int size);
+
+    //Pagination with sorting
+    public List<Allowance> getBySortingPagination(int offset,int size,String field,String direction);
+  
+
+    //Sorting
+    List<Allowance> getBySorting(String field,String direction);
 }

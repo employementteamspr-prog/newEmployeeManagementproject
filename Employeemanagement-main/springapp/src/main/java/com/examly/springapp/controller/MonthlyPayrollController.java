@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.examly.springapp.model.MonthlyPayroll;
@@ -94,4 +95,42 @@ public class MonthlyPayrollController {
         }
         return new ResponseEntity<>("Monthly Payroll not found",HttpStatus.NOT_FOUND);
     }
+
+    //Delete All 
+    @DeleteMapping("/all")
+    public ResponseEntity<Void> deleteAllMonthlyPayroll(){
+        monthlyPayrollService.deleteAllMonthlyPayroll();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    //pagination
+    @GetMapping("/page")
+    public ResponseEntity<List<MonthlyPayroll>> getByPagination(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+            List<MonthlyPayroll> payrolls = monthlyPayrollService.getByPagination(page, size);
+            return new ResponseEntity<>(payrolls, HttpStatus.OK);
+        }
+        //sorting
+        @GetMapping("/sort")
+        public ResponseEntity<List<MonthlyPayroll>> getBySorting(
+            @RequestParam(defaultValue = "id") String field,
+            @RequestParam(defaultValue = "asc") String direction) {
+
+            List<MonthlyPayroll> payrolls = monthlyPayrollService.getBySorting(field, direction);
+            return new ResponseEntity<>(payrolls, HttpStatus.OK);
+        }
+        //pagination and sorting
+         @GetMapping("/page-sort")
+        public ResponseEntity<List<MonthlyPayroll>> getByPaginationAndSorting(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "id") String field,
+            @RequestParam(defaultValue = "asc") String direction) {
+
+            List<MonthlyPayroll> payrolls = monthlyPayrollService.getByPaginationSorting(page, size, field, direction);
+            return new ResponseEntity<>(payrolls, HttpStatus.OK);
+        }
+
+
 }

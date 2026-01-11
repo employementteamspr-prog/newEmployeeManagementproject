@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.examly.springapp.model.Allowance;
@@ -105,6 +106,50 @@ public class AllowanceController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    //DELETE ALL ALLOWANCES
+    @DeleteMapping("/all")
+        public ResponseEntity<Void> deleteAllAllowances() {
+           allowanceService.deleteAllAllowances(); 
+           return new ResponseEntity<>(HttpStatus.NO_CONTENT); 
+        }
+
+    //GET BY PAGINATION
+    @GetMapping("/page")
+     public ResponseEntity<List<Allowance>> getAllowancesByPage(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+            List<Allowance> allowances = allowanceService.getAllowanceByPagination(page, size);
+            return new ResponseEntity<>(allowances, HttpStatus.OK);
+        }
 
     
+    //Get by sorting 
+    @GetMapping("/sort")
+    public ResponseEntity<List<Allowance>> getAllowancesBySort(
+            @RequestParam(defaultValue = "id") String field,
+            @RequestParam(defaultValue = "asc") String direction) {
+
+        List<Allowance> allowances = allowanceService.getBySorting(field, direction);
+        return new ResponseEntity<>(allowances, HttpStatus.OK);
+    }
+    
+    //by pagination and sorting
+    @GetMapping("/page_sort")
+    public ResponseEntity<List<Allowance>> getAllowances(
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "10") int size,
+        @RequestParam(defaultValue = "id") String field,
+        @RequestParam(defaultValue = "asc") String direction) {
+
+        List<Allowance> allowances = allowanceService.getBySortingPagination(page, size, field, direction);
+        return new ResponseEntity<>(allowances, HttpStatus.OK);
+    }
+
 }
+
+
+
+
+
+    

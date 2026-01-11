@@ -3,6 +3,9 @@ package com.examly.springapp.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.examly.springapp.model.Leave;
@@ -67,6 +70,38 @@ public class LeaveServiceImpl implements LeaveService{
             return true;
         }
         return false;
+    }
+
+    //DELETE ALL LEAVES
+    @Override
+    public void deleteAllLeaves(){
+        leaveRepo.deleteAll();
+    }
+
+    //pagination
+    @Override
+    public List<Leave> getLeaveByPagination(int offset,int size){
+        Pageable pageable=PageRequest.of(offset, size);
+        return leaveRepo.findAll(pageable).getContent();
+    }
+
+    //Pagination and Sorting
+    @Override
+    public List<Leave> getLeaveByPaginationAndSorting(int offset,int size,String field,String direction){
+        Sort sort= direction.equalsIgnoreCase("desc")?
+        Sort.by(field).descending():
+        Sort.by(field).ascending();
+        Pageable pageable=PageRequest.of(offset,size,sort);
+        return leaveRepo.findAll(pageable).getContent();
+    }
+
+    //Sorting only by field asc &desc
+    @Override
+    public List<Leave> getBySorting(String field,String direction){
+        Sort sortByField=direction.equalsIgnoreCase("desc")?
+        Sort.by(field).descending():
+        Sort.by(field).ascending();
+        return leaveRepo.findAll(sortByField);
     }
 
 

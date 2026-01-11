@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.examly.springapp.model.Leave;
@@ -94,4 +95,45 @@ public class LeaveController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-}
+
+    //delete all
+    @DeleteMapping("/all")
+        public ResponseEntity<Void> deleteAllLeaves(){
+            leaveService.deleteAllLeaves();
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+    //BY PAGINATION AND SORTING
+    @GetMapping("/page_sort")
+    public ResponseEntity<List<Leave>> getLeaves(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "id") String field,
+            @RequestParam(defaultValue = "asc") String direction) {
+
+            List<Leave> leaves = leaveService.getLeaveByPaginationAndSorting(page, size, field, direction);
+            return new ResponseEntity<>(leaves, HttpStatus.OK);
+    }
+    //pagination
+    @GetMapping("/page")
+    public ResponseEntity<List<Leave>> getLeavesByPage(
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "10") int size) {
+
+            List<Leave> leaves = leaveService.getLeaveByPagination(page, size);
+            return new ResponseEntity<>(leaves, HttpStatus.OK);
+        }
+
+        //Sorting
+    @GetMapping("/sort")
+    public ResponseEntity<List<Leave>> getLeavesBySort(
+        @RequestParam(defaultValue = "id") String field,
+        @RequestParam(defaultValue = "asc") String direction) {
+
+            List<Leave> leaves = leaveService.getBySorting(field, direction);
+            return new ResponseEntity<>(leaves, HttpStatus.OK);
+        }
+
+
+    }
+

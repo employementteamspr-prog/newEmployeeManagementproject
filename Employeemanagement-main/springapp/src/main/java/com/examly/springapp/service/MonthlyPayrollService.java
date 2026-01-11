@@ -30,4 +30,16 @@ public interface MonthlyPayrollService {
     //DELETE PAYROLL BY ID
     boolean deleteById(int monthlyPayrollId);
 
+    //DELETE ALL MONTHLY PAYROLLS
+     void deleteAllMonthlyPayroll();
+
+    //Pagination
+    List<MonthlyPayroll> getByPagination(int offset,int size);
+
+    //Pagination with sorting
+    List<MonthlyPayroll> getByPaginationSorting(int offset,int size,String field,String direction);
+
+    //Sorting only by field asc &desc
+    List<MonthlyPayroll> getBySorting(String field,String direction);
+
 }

@@ -29,5 +29,17 @@ public interface LeaveService {
     
     //DELETE LEAVE BY ID
     boolean deleteLeaveById(int leaveId);
+
+    //DELETE ALL LEAVES
+    void deleteAllLeaves();
+
+    //Pagination
+    List<Leave> getLeaveByPagination(int offset,int size);
+
+    //Pagination and Sorting
+    List<Leave> getLeaveByPaginationAndSorting(int offset,int size,String field,String direction);
+
+    //Sorting only by field asc &desc
+    List<Leave> getBySorting(String field,String direction);
 }
     

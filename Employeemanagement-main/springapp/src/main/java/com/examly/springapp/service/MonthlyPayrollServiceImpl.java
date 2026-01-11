@@ -3,6 +3,9 @@ package com.examly.springapp.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.examly.springapp.model.MonthlyPayroll;
@@ -67,6 +70,38 @@ public class MonthlyPayrollServiceImpl implements MonthlyPayrollService{
         }
         return false;
     }
+
+    //DELETE ALL MONTHLY PAYROLLS
+    @Override
+    public void deleteAllMonthlyPayroll() {
+        monthlyPayrollRepo.deleteAll();
+    }
+
+    //Pagination
+    @Override
+    public List<MonthlyPayroll> getByPagination(int offset,int size){
+        Pageable pageable = PageRequest.of(offset,size);
+        return monthlyPayrollRepo.findAll(pageable).getContent();
+    }
+
+    //pagination with sorting
+    @Override
+    public List<MonthlyPayroll> getByPaginationSorting (int offset,int size,String field,String direction){
+          Sort sortByField=direction.equalsIgnoreCase("desc")?
+            Sort.by(field).descending():
+            Sort.by(field).ascending();
+        Pageable pageable=PageRequest.of(offset,size,sortByField);
+        return monthlyPayrollRepo.findAll(pageable).getContent();
+    }
+
+    //Sorting only by field asc &desc
+    @Override
+    public List<MonthlyPayroll> getBySorting(String field,String direction){    
+        Sort sortByField=direction.equalsIgnoreCase("desc")?
+        Sort.by(field).descending():
+        Sort.by(field).ascending();
+        return monthlyPayrollRepo.findAll(sortByField);
+    }   
 }
 
     
