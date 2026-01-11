@@ -22,7 +22,7 @@ public interface MonthlyPayrollService {
     MonthlyPayroll getByMonthlyPayrollId(int monthlyPayrollId);
 
     //GET PAYROLLS BY NET SALARY
-    List<MonthlyPayroll> getByNetSalary(double netSalary);
+    List<MonthlyPayroll> getBymNetSalary(double mNetSalary);
 
     //UPDATE PAYROLL BY ID
     MonthlyPayroll updateMonthlyPayrollById(int monthlyPayrollId, MonthlyPayroll monthlyPayroll);

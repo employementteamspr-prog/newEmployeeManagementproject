@@ -36,7 +36,7 @@ public class AllowanceController {
     }
 
     //POST MULTIPLE ALLOWANCES
-    @PostMapping    
+    @PostMapping("/multiple")
     public ResponseEntity<List<Allowance>> addAllowances(@RequestBody List<Allowance> allowances) {
         try{
             List<Allowance> savedAllowances = allowanceService.addAllowances(allowances);

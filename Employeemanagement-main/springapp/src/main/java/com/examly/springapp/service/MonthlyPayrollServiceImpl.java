@@ -40,8 +40,8 @@ public class MonthlyPayrollServiceImpl implements MonthlyPayrollService{
 
     //GET BY NET SALARY
     @Override
-    public List<MonthlyPayroll> getByNetSalary(double netSalary){
-        return monthlyPayrollRepo.findByNetSalary(netSalary);
+    public List<MonthlyPayroll> getBymNetSalary(double mNetSalary){
+        return monthlyPayrollRepo.findBymNetSalary(mNetSalary);
     }
 
     //PUT BY MONTHLYPAYROLL ID

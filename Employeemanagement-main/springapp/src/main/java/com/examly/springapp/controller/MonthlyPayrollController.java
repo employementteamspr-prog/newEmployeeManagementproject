@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,7 +35,7 @@ public class MonthlyPayrollController {
     }
 
     //POST ALL PAYROLLS
-    @PostMapping
+    @PostMapping("/multiple")
     public ResponseEntity<List<MonthlyPayroll>> generateAllMonthlyPayroll(@RequestBody List<MonthlyPayroll> monthlyPayroll) {
         try{
             List<MonthlyPayroll> savedList=monthlyPayrollService.saveAllMonthlyPayroll(monthlyPayroll);
@@ -65,9 +66,9 @@ public class MonthlyPayrollController {
     }
 
     //GET PAYROLLS BY NET SALARY
-    @GetMapping("/netSalary/{netSalary}")
-    public ResponseEntity<List<MonthlyPayroll>> getMonthlyPayrollByNetSalary(@PathVariable double netSalary){
-        List<MonthlyPayroll> monthlyPayrolls=monthlyPayrollService.getByNetSalary(netSalary);
+    @GetMapping("/mNetSalary/{mNetSalary}")
+    public ResponseEntity<List<MonthlyPayroll>> getMonthlyPayrollBymNetSalary(@PathVariable double mNetSalary){
+        List<MonthlyPayroll> monthlyPayrolls=monthlyPayrollService.getBymNetSalary(mNetSalary);
         if(monthlyPayrolls.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -85,7 +86,7 @@ public class MonthlyPayrollController {
     }
 
     //DELETE PAYROLL BY MONTHLYPAYROLL ID
-    @GetMapping("/{monthlyPayrollId}")
+    @DeleteMapping("/{monthlyPayrollId}")
     public ResponseEntity<String> deleteMonthlyPayrollById(@PathVariable int monthlyPayrollId){
         boolean Deleted=monthlyPayrollService.deleteById(monthlyPayrollId);
         if(Deleted){

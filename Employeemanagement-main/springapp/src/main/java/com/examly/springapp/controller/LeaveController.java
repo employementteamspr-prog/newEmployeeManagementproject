@@ -35,7 +35,7 @@ public class LeaveController {
     }
     
     //POST MULTIPLE LEAVE
-    @PostMapping
+    @PostMapping("/multiple")
     public ResponseEntity<List<Leave>> applyMultipleLeaves(@RequestBody List<Leave> leave) {
         try{
             List<Leave> savedLeaves = leaveService.saveAllLeave(leave);

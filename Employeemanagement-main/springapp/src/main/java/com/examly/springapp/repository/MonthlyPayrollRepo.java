@@ -10,5 +10,5 @@ import com.examly.springapp.model.MonthlyPayroll;
 
 @Repository
 public interface MonthlyPayrollRepo extends JpaRepository<MonthlyPayroll,Integer>{
-    List<MonthlyPayroll> findByNetSalary(double netSalary);
+    List<MonthlyPayroll> findBymNetSalary(double mNetSalary);
 }
