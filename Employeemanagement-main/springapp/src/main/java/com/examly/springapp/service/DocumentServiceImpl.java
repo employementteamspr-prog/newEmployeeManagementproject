@@ -4,7 +4,10 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import org.hibernate.query.Page;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.examly.springapp.model.Document;
@@ -126,4 +129,17 @@ public boolean deleteDocumentByName(String name) {
         return false;
     }
 }
+
+@Override
+public Page<Document> getDocumentsPaginated(int page, int size, String sortBy, String direction) {
+
+    Sort sort = direction.equalsIgnoreCase("desc") ?
+            Sort.by(sortBy).descending() :
+            Sort.by(sortBy).ascending();
+
+    Pageable pageable = PageRequest.of(page, size, sort);
+
+    return documentRepository.findAll(pageable);
+}
+
 }
