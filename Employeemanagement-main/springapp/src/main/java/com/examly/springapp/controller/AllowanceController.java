@@ -19,14 +19,14 @@ import com.examly.springapp.model.Allowance;
 import com.examly.springapp.service.AllowanceService;
 
 @RestController
-@RequestMapping("/allowance")
+@RequestMapping("/api")
 public class AllowanceController {
 
     @Autowired
     private AllowanceService allowanceService;
 
     //POST SINGLE ALLOWANCE
-    @PostMapping
+    @PostMapping("/allowance")
     public ResponseEntity<Allowance> addAllowance(@RequestBody Allowance allowance) {
         try{
             Allowance savedAllowance = allowanceService.addAllowance(allowance);
@@ -37,7 +37,7 @@ public class AllowanceController {
     }
 
     //POST MULTIPLE ALLOWANCES
-    @PostMapping("/multiple")
+    @PostMapping("/allowances")
     public ResponseEntity<List<Allowance>> addAllowances(@RequestBody List<Allowance> allowances) {
         try{
             List<Allowance> savedAllowances = allowanceService.addAllowances(allowances);
@@ -48,7 +48,7 @@ public class AllowanceController {
     }
 
     //GET ALL ALLOWANCES
-    @GetMapping
+    @GetMapping("/allowances")
     public ResponseEntity<List<Allowance>> getAllAllowances(){
         List<Allowance> allowances=allowanceService.getAllAllowances();
         if(allowances.isEmpty()){
@@ -58,7 +58,7 @@ public class AllowanceController {
     }
 
     //GET ALLOWANCE BY ID
-    @GetMapping("/{allowanceId}")
+    @GetMapping("/allowance/{allowanceId}")
     public ResponseEntity<Allowance> getAllowanceById(@PathVariable int allowanceId){
         Allowance allowance=allowanceService.getAllowanceById(allowanceId);
         if(allowance==null){
@@ -87,7 +87,7 @@ public class AllowanceController {
     }
 
     //UPDATE ALLOWANCE BY ID
-    @PutMapping("/{allowanceId}")   
+    @PutMapping("/allowance/{allowanceId}")   
     public ResponseEntity<Allowance> updateAllowanceById(@PathVariable int allowanceId, @RequestBody Allowance allowance){
         Allowance updatedAllowance=allowanceService.updateAllowanceById(allowanceId, allowance);
         if(updatedAllowance==null){
@@ -97,7 +97,7 @@ public class AllowanceController {
     }
 
     //DELETE ALLOWANCE BY ID
-    @DeleteMapping("/{allowanceId}")
+    @DeleteMapping("/allowance/{allowanceId}")
     public ResponseEntity<String> deleteAllowanceById(@PathVariable int allowanceId){
         boolean isDeleted=allowanceService.deleteAllowanceById(allowanceId);
         if(isDeleted){
@@ -107,14 +107,14 @@ public class AllowanceController {
     }
 
     //DELETE ALL ALLOWANCES
-    @DeleteMapping("/all")
+    @DeleteMapping("/allowances")
         public ResponseEntity<Void> deleteAllAllowances() {
            allowanceService.deleteAllAllowances(); 
            return new ResponseEntity<>(HttpStatus.NO_CONTENT); 
         }
 
     //GET BY PAGINATION
-    @GetMapping("/page")
+    @GetMapping("/allowance/page")
      public ResponseEntity<List<Allowance>> getAllowancesByPage(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
@@ -125,7 +125,7 @@ public class AllowanceController {
 
     
     //Get by sorting 
-    @GetMapping("/sort")
+    @GetMapping("/allowance/sort")
     public ResponseEntity<List<Allowance>> getAllowancesBySort(
             @RequestParam(defaultValue = "id") String field,
             @RequestParam(defaultValue = "asc") String direction) {
@@ -133,9 +133,9 @@ public class AllowanceController {
         List<Allowance> allowances = allowanceService.getBySorting(field, direction);
         return new ResponseEntity<>(allowances, HttpStatus.OK);
     }
-    
+
     //by pagination and sorting
-    @GetMapping("/page_sort")
+    @GetMapping("/allowance/page_sort")
     public ResponseEntity<List<Allowance>> getAllowances(
         @RequestParam(defaultValue = "0") int page,
         @RequestParam(defaultValue = "10") int size,

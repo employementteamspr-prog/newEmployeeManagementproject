@@ -124,7 +124,7 @@ public class LeaveController {
             return new ResponseEntity<>(leaves, HttpStatus.OK);
         }
 
-        //Sorting
+    //Sorting
     @GetMapping("/leave/sort")
     public ResponseEntity<List<Leave>> getLeavesBySort(
         @RequestParam(defaultValue = "id") String field,

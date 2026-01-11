@@ -20,12 +20,12 @@ import com.examly.springapp.model.MonthlyPayroll;
 import com.examly.springapp.service.MonthlyPayrollService;
 
 @RestController
-@RequestMapping("/monthlyPayroll")
+@RequestMapping("/api")
 public class MonthlyPayrollController {
     @Autowired
     private MonthlyPayrollService monthlyPayrollService;
     //POST ONE PAYROLL
-    @PostMapping
+    @PostMapping("/payroll")
     public ResponseEntity<MonthlyPayroll> generateMonthlyPayroll(@RequestBody MonthlyPayroll monthlyPayroll) {
         try{
             MonthlyPayroll saved=monthlyPayrollService.saveMonthlyPayroll(monthlyPayroll);
@@ -36,7 +36,7 @@ public class MonthlyPayrollController {
     }
 
     //POST ALL PAYROLLS
-    @PostMapping("/multiple")
+    @PostMapping("/payrolls")
     public ResponseEntity<List<MonthlyPayroll>> generateAllMonthlyPayroll(@RequestBody List<MonthlyPayroll> monthlyPayroll) {
         try{
             List<MonthlyPayroll> savedList=monthlyPayrollService.saveAllMonthlyPayroll(monthlyPayroll);
@@ -47,7 +47,7 @@ public class MonthlyPayrollController {
     }
 
     //GET ALL PAYROLLS
-    @GetMapping
+    @GetMapping("/payrolls")
     public ResponseEntity<List<MonthlyPayroll>> getAllMonthlyPayroll(){
         List<MonthlyPayroll> monthlyPayrolls=monthlyPayrollService.getAllMonthlyPayroll();
         if(monthlyPayrolls.isEmpty()){
@@ -57,7 +57,7 @@ public class MonthlyPayrollController {
     }
 
     //GET PAYROLL BY MONTHLYPAYROLL ID
-    @GetMapping("/{monthlyPayrollId}")
+    @GetMapping("/payroll/{monthlyPayrollId}")
     public ResponseEntity<MonthlyPayroll> getMonthlyPayrollById(@PathVariable int monthlyPayrollId){
         MonthlyPayroll monthlyPayroll=monthlyPayrollService.getByMonthlyPayrollId(monthlyPayrollId);
         if(monthlyPayroll==null){
@@ -77,7 +77,7 @@ public class MonthlyPayrollController {
     }
 
     //UPDATE PAYROLL BY MONTHLYPAYROLL ID
-    @PutMapping("/{monthlyPayrollId}")
+    @PutMapping("/payroll/{monthlyPayrollId}")
     public ResponseEntity<MonthlyPayroll> updateMonthlyPayrollById(@PathVariable int monthlyPayrollId,@RequestBody MonthlyPayroll monthlyPayroll){
         MonthlyPayroll updatedMonthlyPayroll=monthlyPayrollService.updateMonthlyPayrollById(monthlyPayrollId,monthlyPayroll);
         if(updatedMonthlyPayroll==null){
@@ -87,7 +87,7 @@ public class MonthlyPayrollController {
     }
 
     //DELETE PAYROLL BY MONTHLYPAYROLL ID
-    @DeleteMapping("/{monthlyPayrollId}")
+    @DeleteMapping("payroll/{monthlyPayrollId}")
     public ResponseEntity<String> deleteMonthlyPayrollById(@PathVariable int monthlyPayrollId){
         boolean Deleted=monthlyPayrollService.deleteById(monthlyPayrollId);
         if(Deleted){
@@ -97,13 +97,13 @@ public class MonthlyPayrollController {
     }
 
     //Delete All 
-    @DeleteMapping("/all")
+    @DeleteMapping("/payrolls")
     public ResponseEntity<Void> deleteAllMonthlyPayroll(){
         monthlyPayrollService.deleteAllMonthlyPayroll();
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     //pagination
-    @GetMapping("/page")
+    @GetMapping("/payroll/page")
     public ResponseEntity<List<MonthlyPayroll>> getByPagination(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
@@ -112,7 +112,7 @@ public class MonthlyPayrollController {
             return new ResponseEntity<>(payrolls, HttpStatus.OK);
         }
         //sorting
-        @GetMapping("/sort")
+        @GetMapping("/payroll/sort")
         public ResponseEntity<List<MonthlyPayroll>> getBySorting(
             @RequestParam(defaultValue = "id") String field,
             @RequestParam(defaultValue = "asc") String direction) {
@@ -121,7 +121,7 @@ public class MonthlyPayrollController {
             return new ResponseEntity<>(payrolls, HttpStatus.OK);
         }
         //pagination and sorting
-         @GetMapping("/page-sort")
+         @GetMapping("/payroll/page-sort")
         public ResponseEntity<List<MonthlyPayroll>> getByPaginationAndSorting(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
