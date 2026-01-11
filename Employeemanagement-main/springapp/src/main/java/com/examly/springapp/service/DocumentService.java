@@ -31,3 +31,4 @@ public interface DocumentService {
        Page<Document> getDocumentsPaginated(int page, int size, String sortBy, String direction);
 
 }
+}
