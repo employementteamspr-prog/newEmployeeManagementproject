@@ -126,6 +126,7 @@ public class EmployeeController {
         }
         return new ResponseEntity<>(false, HttpStatus.NO_CONTENT);
     }
+<<<<<<< HEAD
     // ===============================
     // PAGINATION ONLY
     // ===============================
@@ -190,3 +191,6 @@ public class EmployeeController {
     }
 }
 
+=======
+}
+>>>>>>> f1e12739550aadcbdcd71dd10693be1fa2d6e37b

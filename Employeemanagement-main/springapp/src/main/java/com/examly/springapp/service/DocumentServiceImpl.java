@@ -160,6 +160,7 @@ public boolean deleteDocumentByName(String name) {
         return documentRepository.findAll(pageable);
     }
 
+<<<<<<< HEAD
     // -------- SORT BY FIXED FIELDS --------
     @Override
     public List<Document> sortByDocId(String direction) {
@@ -187,3 +188,7 @@ public boolean deleteDocumentByName(String name) {
 
     
 }
+=======
+}
+}
+>>>>>>> f1e12739550aadcbdcd71dd10693be1fa2d6e37b

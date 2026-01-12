@@ -32,6 +32,7 @@ public interface DocumentService {
 
        List<Document> getDocumentsSorted(String field, String direction);
 
+<<<<<<< HEAD
        Page<Document> getDocumentsWithPaginationAndSorting(
             int page, int size, String field, String direction);
 
@@ -41,3 +42,7 @@ public interface DocumentService {
 
        List<Document> sortByUploadDate(String direction);
 }
+=======
+}
+}
+>>>>>>> f1e12739550aadcbdcd71dd10693be1fa2d6e37b

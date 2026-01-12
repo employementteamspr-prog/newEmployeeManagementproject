@@ -17,7 +17,11 @@ public interface ReviewRepo extends JpaRepository<Review,Long> {
     Optional<Review> findById(Long id);
 
     void deleteById(Long id);
+<<<<<<< HEAD
 
      // Pagination + Sorting handled automatically
     Page<Review> findAll(Pageable pageable);
 }
+=======
+}
+>>>>>>> f1e12739550aadcbdcd71dd10693be1fa2d6e37b

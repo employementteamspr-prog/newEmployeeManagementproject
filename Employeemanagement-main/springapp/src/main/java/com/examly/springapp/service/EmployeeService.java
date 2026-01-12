@@ -28,6 +28,7 @@ public interface EmployeeService {
     boolean deletEmployeeById(Long id);
 
     boolean deleteEmployees();
+<<<<<<< HEAD
 
     // Pagination
     Page<Employee> getEmployeesWithPagination(int page, int size);
@@ -44,3 +45,6 @@ public interface EmployeeService {
     List<Employee> sortByDateOfJoining();
     List<Employee> sortByJobRoleId();
 } 
+=======
+} 
+>>>>>>> f1e12739550aadcbdcd71dd10693be1fa2d6e37b
