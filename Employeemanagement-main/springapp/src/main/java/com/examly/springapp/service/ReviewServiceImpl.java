@@ -5,6 +5,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.examly.springapp.model.Review;
@@ -96,5 +100,60 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public List<Review> getAllReviews() {
         return reviewRepository.findAll();
+    }
+
+    // ===============================
+    // PAGINATION ONLY
+    // ===============================
+    @Override
+    public Page<Review> getReviewsWithPagination(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return reviewRepository.findAll(pageable);
+    }
+
+    // ===============================
+    // SORTING ONLY
+    // ===============================
+    @Override
+    public List<Review> getReviewsWithSorting(String field, String direction) {
+
+        Sort sort = direction.equalsIgnoreCase("desc")
+                ? Sort.by(field).descending()
+                : Sort.by(field).ascending();
+
+        return reviewRepository.findAll(sort);
+    }
+
+    // ===============================
+    // PAGINATION + SORTING
+    // ===============================
+    @Override
+    public Page<Review> getReviewsWithPaginationAndSorting(
+            int page, int size, String field, String direction) {
+
+        Sort sort = direction.equalsIgnoreCase("desc")
+                ? Sort.by(field).descending()
+                : Sort.by(field).ascending();
+
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return reviewRepository.findAll(pageable);
+    }
+
+    // ===============================
+    // SORT BY SEPARATE FIELDS
+    // ===============================
+    @Override
+    public List<Review> sortByRating() {
+        return reviewRepository.findAll(Sort.by("rating").descending());
+    }
+
+    @Override
+    public List<Review> sortByReviewDate() {
+        return reviewRepository.findAll(Sort.by("reviewDate").descending());
+    }
+
+    @Override
+    public List<Review> sortByReviewerId() {
+        return reviewRepository.findAll(Sort.by("reviewerId").ascending());
     }
 }

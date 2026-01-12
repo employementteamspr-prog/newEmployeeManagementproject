@@ -4,11 +4,14 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-import org.hibernate.query.Page;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import com.examly.springapp.model.Document;
 import com.examly.springapp.repository.DocumentRepo;
@@ -129,17 +132,58 @@ public boolean deleteDocumentByName(String name) {
         return false;
     }
 }
+// ---------------- PAGINATION ONLY ----------------
+    @Override
+    public Page<Document> getDocumentsWithPagination(int page, int size) {
+        return documentRepository.findAll(PageRequest.of(page, size));
+    }
 
-@Override
-public Page<Document> getDocumentsPaginated(int page, int size, String sortBy, String direction) {
+    // ---------------- SORTING ONLY ----------------
+    @Override
+    public List<Document> getDocumentsSorted(String field, String direction) {
+        Sort sort = direction.equalsIgnoreCase("desc")
+                ? Sort.by(field).descending()
+                : Sort.by(field).ascending();
+        return documentRepository.findAll(sort);
+    }
 
-    Sort sort = direction.equalsIgnoreCase("desc") ?
-            Sort.by(sortBy).descending() :
-            Sort.by(sortBy).ascending();
+    // -------- PAGINATION + SORTING --------
+    @Override
+    public Page<Document> getDocumentsWithPaginationAndSorting(
+            int page, int size, String field, String direction) {
 
-    Pageable pageable = PageRequest.of(page, size, sort);
+        Sort sort = direction.equalsIgnoreCase("desc")
+                ? Sort.by(field).descending()
+                : Sort.by(field).ascending();
 
-    return documentRepository.findAll(pageable);
-}
+        Pageable pageable= PageRequest.of(page, size, sort);
+        return documentRepository.findAll(pageable);
+    }
 
+    // -------- SORT BY FIXED FIELDS --------
+    @Override
+    public List<Document> sortByDocId(String direction) {
+        return documentRepository.findAll(
+                direction.equalsIgnoreCase("desc")
+                        ? Sort.by("docId").descending()
+                        : Sort.by("docId").ascending());
+    }
+
+    @Override
+    public List<Document> sortByDocName(String direction) {
+        return documentRepository.findAll(
+                direction.equalsIgnoreCase("desc")
+                        ? Sort.by("docName").descending()
+                        : Sort.by("docName").ascending());
+    }
+
+    @Override
+    public List<Document> sortByUploadDate(String direction) {
+        return documentRepository.findAll(
+                direction.equalsIgnoreCase("desc")
+                        ? Sort.by("uploadDate").descending()
+                        : Sort.by("uploadDate").ascending());
+    }
+
+    
 }

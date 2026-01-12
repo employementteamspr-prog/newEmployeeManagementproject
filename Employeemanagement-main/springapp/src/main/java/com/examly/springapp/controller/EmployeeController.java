@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.examly.springapp.model.Employee;
@@ -48,7 +50,7 @@ public class EmployeeController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/employee/{id}")
+    @GetMapping("/employee/id/{id}")
     public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id){
         Employee employee=employeeService.getEmployeeById(id);
 
@@ -58,7 +60,7 @@ public class EmployeeController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/employee/{name}")
+    @GetMapping("/employee/name/{name}")
     public ResponseEntity<Employee> getEmployeeByName(@PathVariable String name){
         Employee employee=employeeService.getEmployeeByName(name);
 
@@ -123,6 +125,68 @@ public class EmployeeController {
             return new ResponseEntity<>(true, HttpStatus.OK);
         }
         return new ResponseEntity<>(false, HttpStatus.NO_CONTENT);
+    }
+    // ===============================
+    // PAGINATION ONLY
+    // ===============================
+    @GetMapping("/employees/page")
+    public ResponseEntity<Page<Employee>> getEmployeesWithPagination(
+            @RequestParam int page,
+            @RequestParam int size) {
+
+        return new ResponseEntity<>(
+                employeeService.getEmployeesWithPagination(page, size),
+                HttpStatus.OK
+        );
+    }
+
+    // ===============================
+    // SORTING ONLY
+    // ===============================
+    @GetMapping("/employees/sort")
+    public ResponseEntity<List<Employee>> getEmployeesWithSorting(
+            @RequestParam String field,
+            @RequestParam(defaultValue = "asc") String direction) {
+
+        return new ResponseEntity<>(
+                employeeService.getEmployeesWithSorting(field, direction),
+                HttpStatus.OK
+        );
+    }
+
+    // ===============================
+    // PAGINATION + SORTING
+    // ===============================
+    @GetMapping("/employees/page-sort")
+    public ResponseEntity<Page<Employee>> getEmployeesWithPaginationAndSorting(
+            @RequestParam int page,
+            @RequestParam int size,
+            @RequestParam String field,
+            @RequestParam(defaultValue = "asc") String direction) {
+
+        return new ResponseEntity<>(
+                employeeService.getEmployeesWithPaginationAndSorting(
+                        page, size, field, direction),
+                HttpStatus.OK
+        );
+    }
+
+    // ===============================
+    // SORT BY SPECIFIC FIELDS
+    // ===============================
+    @GetMapping("/employees/sort/name")
+    public List<Employee> sortByName() {
+        return employeeService.sortByName();
+    }
+
+    @GetMapping("/employees/sort/date")
+    public List<Employee> sortByDate() {
+        return employeeService.sortByDateOfJoining();
+    }
+
+    @GetMapping("/employees/sort/jobrole")
+    public List<Employee> sortByJobRole() {
+        return employeeService.sortByJobRoleId();
     }
 }
 

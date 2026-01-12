@@ -1,8 +1,11 @@
 package com.examly.springapp.repository;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.examly.springapp.model.Employee;
@@ -17,4 +20,7 @@ public interface EmployeeRepo extends JpaRepository<Employee,Long>{
     Optional<Employee> findById(Long id);
 
     void deleteById(Long id);
+
+    // Pagination support
+    Page<Employee> findAll(Pageable pageable);
 }

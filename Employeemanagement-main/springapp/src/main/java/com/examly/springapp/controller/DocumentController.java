@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -240,25 +241,57 @@ public class DocumentController {
 
         return new ResponseEntity<>("No documents available", HttpStatus.NO_CONTENT);
     }
+        // ---------- PAGINATION ----------
+    @GetMapping("/pagination")
+    public ResponseEntity<Page<Document>> pagination(
+            @RequestParam int page,
+            @RequestParam int size) {
 
-    // ===============================
-// PAGINATION + SORTING
-// ===============================
-@GetMapping("/paginated")
-public ResponseEntity<Page<Document>> getDocumentsPaginated(
-        @RequestParam(defaultValue = "0") int page,
-        @RequestParam(defaultValue = "5") int size,
-        @RequestParam(defaultValue = "uploadDate") String sortBy,
-        @RequestParam(defaultValue = "asc") String direction) {
-
-    Page<Document> documents =
-            documentService.getDocumentsPaginated(page, size, sortBy, direction);
-
-    if (!documents.isEmpty()) {
-        return new ResponseEntity<>(documents, HttpStatus.OK);
+        return ResponseEntity.ok(
+                documentService.getDocumentsWithPagination(page, size));
     }
 
-    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-}
+    // ---------- SORTING ----------
+    @GetMapping("/sorting")
+    public ResponseEntity<List<Document>> sorting(
+            @RequestParam String field,
+            @RequestParam(defaultValue = "asc") String direction) {
+
+        return ResponseEntity.ok(
+                documentService.getDocumentsSorted(field, direction));
+    }
+
+    // ---------- PAGINATION + SORTING ----------
+    @GetMapping("/pagination-sorting")
+    public ResponseEntity<Page<Document>> paginationSorting(
+            @RequestParam int page,
+            @RequestParam int size,
+            @RequestParam String field,
+            @RequestParam(defaultValue = "asc") String direction) {
+
+        return ResponseEntity.ok(
+                documentService.getDocumentsWithPaginationAndSorting(
+                        page, size, field, direction));
+    }
+
+    // ---------- SORT BY ENTITY ----------
+    @GetMapping("/sort/docId")
+    public ResponseEntity<List<Document>> sortByDocId(
+            @RequestParam(defaultValue = "asc") String direction) {
+        return ResponseEntity.ok(documentService.sortByDocId(direction));
+    }
+
+    @GetMapping("/sort/docName")
+    public ResponseEntity<List<Document>> sortByDocName(
+            @RequestParam(defaultValue = "asc") String direction) {
+        return ResponseEntity.ok(documentService.sortByDocName(direction));
+    }
+
+    @GetMapping("/sort/uploadDate")
+    public ResponseEntity<List<Document>> sortByUploadDate(
+            @RequestParam(defaultValue = "asc") String direction) {
+        return ResponseEntity.ok(documentService.sortByUploadDate(direction));
+    }
+
 
 }

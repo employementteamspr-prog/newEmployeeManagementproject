@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.examly.springapp.model.Review;
@@ -122,5 +124,67 @@ public class ReviewController {
             return new ResponseEntity<>(true, HttpStatus.OK);
         }
         return new ResponseEntity<>(false, HttpStatus.NO_CONTENT);
+    }
+    // ===============================
+    // PAGINATION ONLY
+    // ===============================
+    @GetMapping("/page")
+    public ResponseEntity<Page<Review>> getReviewsWithPagination(
+            @RequestParam int page,
+            @RequestParam int size) {
+
+        return new ResponseEntity<>(
+                reviewService.getReviewsWithPagination(page, size),
+                HttpStatus.OK
+        );
+    }
+
+    // ===============================
+    // SORTING ONLY
+    // ===============================
+    @GetMapping("/sort")
+    public ResponseEntity<List<Review>> getReviewsWithSorting(
+            @RequestParam String field,
+            @RequestParam(defaultValue = "asc") String direction) {
+
+        return new ResponseEntity<>(
+                reviewService.getReviewsWithSorting(field, direction),
+                HttpStatus.OK
+        );
+    }
+
+    // ===============================
+    // PAGINATION + SORTING
+    // ===============================
+    @GetMapping("/page-sort")
+    public ResponseEntity<Page<Review>> getReviewsWithPaginationAndSorting(
+            @RequestParam int page,
+            @RequestParam int size,
+            @RequestParam String field,
+            @RequestParam(defaultValue = "asc") String direction) {
+
+        return new ResponseEntity<>(
+                reviewService.getReviewsWithPaginationAndSorting(
+                        page, size, field, direction),
+                HttpStatus.OK
+        );
+    }
+
+    // ===============================
+    // SORT BY SPECIFIC FIELDS
+    // ===============================
+    @GetMapping("/sort/rating")
+    public List<Review> sortByRating() {
+        return reviewService.sortByRating();
+    }
+
+    @GetMapping("/sort/date")
+    public List<Review> sortByDate() {
+        return reviewService.sortByReviewDate();
+    }
+
+    @GetMapping("/sort/reviewer")
+    public List<Review> sortByReviewer() {
+        return reviewService.sortByReviewerId();
     }
 }

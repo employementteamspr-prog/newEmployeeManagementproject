@@ -3,7 +3,7 @@ package com.examly.springapp.service;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.hibernate.query.Page;
+import org.springframework.data.domain.Page;
 
 import com.examly.springapp.model.Document;
 
@@ -27,7 +27,17 @@ public interface DocumentService {
        boolean deleteDocumentById(Long id);
 
        boolean deleteDocumentByName(String name);
+      
+       Page<Document> getDocumentsWithPagination(int page, int size);
 
-       Page<Document> getDocumentsPaginated(int page, int size, String sortBy, String direction);
+       List<Document> getDocumentsSorted(String field, String direction);
 
+       Page<Document> getDocumentsWithPaginationAndSorting(
+            int page, int size, String field, String direction);
+
+       List<Document> sortByDocId(String direction);
+
+       List<Document> sortByDocName(String direction);
+
+       List<Document> sortByUploadDate(String direction);
 }

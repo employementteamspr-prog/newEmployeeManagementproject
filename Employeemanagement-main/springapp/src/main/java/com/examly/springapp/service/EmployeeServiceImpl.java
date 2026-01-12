@@ -5,6 +5,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.examly.springapp.model.Employee;
@@ -121,5 +125,59 @@ public boolean deleteEmployees() {
         return false;
     }
 }
+ // ===============================
+    // PAGINATION ONLY
+    // ===============================
+    @Override
+    public Page<Employee> getEmployeesWithPagination(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return employeeRepo.findAll(pageable);
+    }
 
+    // ===============================
+    // SORTING ONLY
+    // ===============================
+    @Override
+    public List<Employee> getEmployeesWithSorting(String field, String direction) {
+
+        Sort sort = direction.equalsIgnoreCase("desc")
+                ? Sort.by(field).descending()
+                : Sort.by(field).ascending();
+
+        return employeeRepo.findAll(sort);
+    }
+
+    // ===============================
+    // PAGINATION + SORTING
+    // ===============================
+    @Override
+    public Page<Employee> getEmployeesWithPaginationAndSorting(
+            int page, int size, String field, String direction) {
+
+        Sort sort = direction.equalsIgnoreCase("desc")
+                ? Sort.by(field).descending()
+                : Sort.by(field).ascending();
+
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return employeeRepo.findAll(pageable);
+    }
+
+    // ===============================
+    // SORTING BY FIXED FIELDS
+    // ===============================
+    @Override
+    public List<Employee> sortByName() {
+        return employeeRepo.findAll(Sort.by("name").ascending());
+    }
+
+    @Override
+    public List<Employee> sortByDateOfJoining() {
+        return employeeRepo.findAll(Sort.by("dateOfJoining").descending());
+    }
+
+    @Override
+    public List<Employee> sortByJobRoleId() {
+        return employeeRepo.findAll(Sort.by("jobRoleId").ascending());
+    }
 }
+
