@@ -140,20 +140,6 @@ public class ReviewController {
     }
 
     // ===============================
-    // SORTING ONLY
-    // ===============================
-    @GetMapping("/sort")
-    public ResponseEntity<List<Review>> getReviewsWithSorting(
-            @RequestParam String field,
-            @RequestParam(defaultValue = "asc") String direction) {
-
-        return new ResponseEntity<>(
-                reviewService.getReviewsWithSorting(field, direction),
-                HttpStatus.OK
-        );
-    }
-
-    // ===============================
     // PAGINATION + SORTING
     // ===============================
     @GetMapping("/page-sort")

@@ -101,7 +101,6 @@ public class ReviewServiceImpl implements ReviewService {
     public List<Review> getAllReviews() {
         return reviewRepository.findAll();
     }
-<<<<<<< HEAD
 
     // ===============================
     // PAGINATION ONLY
@@ -158,6 +157,3 @@ public class ReviewServiceImpl implements ReviewService {
         return reviewRepository.findAll(Sort.by("reviewerId").ascending());
     }
 }
-=======
-}
->>>>>>> f1e12739550aadcbdcd71dd10693be1fa2d6e37b
