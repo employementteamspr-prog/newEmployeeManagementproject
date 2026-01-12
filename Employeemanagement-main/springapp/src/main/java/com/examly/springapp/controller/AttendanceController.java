@@ -2,6 +2,7 @@ package com.examly.springapp.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,51 +21,104 @@ public class AttendanceController {
     private AttendanceService attendanceService;
     // Add Attendance
     @PostMapping("/add")
-    public Attendance addAttendance(@RequestBody Attendance attendance) {
-        return attendanceService.addAttendence(attendance);
+    public ResponseEntity<Attendance> addAttendance(@RequestBody Attendance attendance) {
+        if (attendanceService.addAttendence(attendance) != null) {
+            return ResponseEntity.ok(attendanceService.addAttendence(attendance));
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
     // Add Multiple Attendances
     @PostMapping("/addMultiple")
-    public List<Attendance> addMultipleAttendances(@RequestBody List<Attendance> attendances) {
-        return attendanceService.addAttendences(attendances);
+    public ResponseEntity<List<Attendance>> addMultipleAttendances(@RequestBody List<Attendance> attendances) {
+        List<Attendance> addedAttendances = attendanceService.addAttendences(attendances);
+        if(addedAttendances != null) {
+            return ResponseEntity.ok(addedAttendances);
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
     // Get Attendance By Id
     @GetMapping("/get/{id}")
-    public Attendance getAttendanceById(@PathVariable Long id) {
-        return attendanceService.getAttendenceById(id);
+    public ResponseEntity<Attendance> getAttendanceById(@PathVariable Long id) {
+        Attendance attendance = attendanceService.getAttendenceById(id);
+        if (attendance != null) {
+            return ResponseEntity.ok(attendance);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     // Get All Attendances
     @GetMapping("/getAll")
-    public List<Attendance> getAllAttendances() {
-        return attendanceService.getAllAttendences();
+    public ResponseEntity<List<Attendance>> getAllAttendances() {
+        List<Attendance> attendances = attendanceService.getAllAttendences();
+        if (attendances != null) {
+            return ResponseEntity.ok(attendances);
+        } else {
+            return ResponseEntity.notFound().build();
+        }   
     }
 
     // Update Attendance
     @PutMapping("/update/{id}")
-    public Attendance updateAttendance(@PathVariable Long id, @RequestBody Attendance attendance) {
-        return attendanceService.updateAttendence(id, attendance);
+    public ResponseEntity<Attendance> updateAttendance(@PathVariable Long id, @RequestBody Attendance attendance) {
+        Attendance updatedAttendance = attendanceService.updateAttendence(id, attendance);
+        if (updatedAttendance != null) {
+            return ResponseEntity.ok(updatedAttendance);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
     // Delete Attendance
     @DeleteMapping("/delete/{id}")
-    public boolean deleteAttendance(@PathVariable Long id) {
-        return attendanceService.deleteAttendence(id);
+    public ResponseEntity<Boolean> deleteAttendance(@PathVariable Long id) {
+        boolean deleted = attendanceService.deleteAttendence(id);
+        if (deleted) {
+            return ResponseEntity.ok(deleted);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
-    // Get Attendance By Date
-    @GetMapping("/getByDate/{date}")
-    public List<Attendance> getAttendanceByDate(@PathVariable String date) {
-        return attendanceService.getAttendenceByDate(date);
+   
+    // // Get Attendance By ClockInTime
+    // @GetMapping("/getByClockInTime/{clockInTime}")
+    // public ResponseEntity<List<Attendance>> getAttendanceByClockInTime(@PathVariable String clockInTime) {
+    //     List<Attendance> attendances = attendanceService.getAttendancesByClockInTime(clockInTime);
+    //     if (attendances != null) {
+    //         return ResponseEntity.ok(attendances);
+    //     } else {
+    //         return ResponseEntity.notFound().build();
+    //     }
+    // }
+
+
+    
+
+    // // Get Attendance By ClockOutTime
+    // @GetMapping("/getByClockOutTime/{clockOutTime}")
+    // public ResponseEntity<List<Attendance>> getAttendanceByClockOutTime(@PathVariable String clockOutTime) {
+    //     List<Attendance> attendances = attendanceService.getAttendancesByClockOutTime(clockOutTime);
+    //     if (attendances != null) {
+    //         return ResponseEntity.ok(attendances);
+    //     } else {
+    //         return ResponseEntity.notFound().build();
+    //     }
+    // }
+
+    // CLOCK IN
+    @PostMapping("/clockIn")
+    public ResponseEntity<Attendance> clockIn(@RequestBody Attendance attendance) {
+        return ResponseEntity.ok(attendanceService.clockIn(attendance));
     }
 
-    // Get Attendance By ClockInTime
-    @GetMapping("/getByClockInTime/{clockInTime}")
-    public List<Attendance> getAttendanceByClockInTime(@PathVariable String clockInTime) {
-        return attendanceService.getAttendancesByClockInTime(clockInTime);
-    }
-
-    // Get Attendance By ClockOutTime
-    @GetMapping("/getByClockOutTime/{clockOutTime}")
-    public List<Attendance> getAttendanceByClockOutTime(@PathVariable String clockOutTime) {
-        return attendanceService.getAttendancesByClockOutTime(clockOutTime);
+    // CLOCK OUT
+    @PutMapping("/clockOut/{id}")
+    public ResponseEntity<Attendance> clockOut(@PathVariable Long id) {
+        Attendance updated = attendanceService.clockOut(id);
+        if (updated != null) {
+            return ResponseEntity.ok(updated);
+        }
+        return ResponseEntity.notFound().build();
     }
 }

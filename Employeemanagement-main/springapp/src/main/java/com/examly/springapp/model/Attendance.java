@@ -1,6 +1,7 @@
 package com.examly.springapp.model;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,14 +14,14 @@ public class Attendance {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long attendanceId;
 
-    private String clockInTime;
-    private String clockOutTime;
+    private LocalTime clockInTime;
+    private LocalTime clockOutTime;
     private String location;
     private LocalDate date;
 
     public Attendance() {}
 
-    public Attendance(String clockInTime, String clockOutTime, LocalDate date, String location) {
+    public Attendance(LocalTime clockInTime, LocalTime clockOutTime, LocalDate date, String location) {
         this.clockInTime = clockInTime;
         this.clockOutTime = clockOutTime;
         this.date = date;
@@ -35,19 +36,19 @@ public class Attendance {
         this.attendanceId = attendanceId;
     }
 
-    public String getClockInTime() {
+    public LocalTime getClockInTime() {
         return clockInTime;
     }
 
-    public void setClockInTime(String clockInTime) {
+    public void setClockInTime(LocalTime clockInTime) {
         this.clockInTime = clockInTime;
     }
 
-    public String getClockOutTime() {
+    public LocalTime     getClockOutTime() {
         return clockOutTime;
     }
 
-    public void setClockOutTime(String clockOutTime) {
+    public void setClockOutTime(LocalTime clockOutTime) {
         this.clockOutTime = clockOutTime;
     }
 

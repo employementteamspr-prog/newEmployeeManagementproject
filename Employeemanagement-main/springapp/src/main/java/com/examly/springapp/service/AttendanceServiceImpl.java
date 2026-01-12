@@ -1,5 +1,8 @@
+
 package com.examly.springapp.service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +12,8 @@ import com.examly.springapp.model.Attendance;
 import com.examly.springapp.repository.AttendanceRepo;
 
 @Service
-public class AttendanceServiceImpl implements AttendanceService{
+public class AttendanceServiceImpl implements AttendanceService
+{
     @Autowired
     private AttendanceRepo attendanceRepo;
     @Override
@@ -36,7 +40,7 @@ public class AttendanceServiceImpl implements AttendanceService{
             existingAttendence.setClockOutTime(attendence.getClockOutTime());
             existingAttendence.setLocation(attendence.getLocation());
             
-            existingAttendence.setDate(attendence.getDate());
+          
             
             return attendanceRepo.save(existingAttendence);
         }
@@ -49,23 +53,39 @@ public class AttendanceServiceImpl implements AttendanceService{
         return true;
     }
 
-    @Override
-    public List<Attendance> getAttendenceByDate(String date) {
-        return attendanceRepo.findByDate(date);
-    }
+    
 
     @Override
     public List<Attendance> addAttendences(List<Attendance> attendences) {
         return attendanceRepo.saveAll(attendences);
     }
 
+    // @Override
+    // public List<Attendance> getAttendancesByClockInTime(String clockInTime) {
+    //     return attendanceRepo.findByClockInTime(clockInTime);
+    // }
+
+    // @Override
+    // public List<Attendance> getAttendancesByClockOutTime(String clockOutTime) {
+    //     return attendanceRepo.findByClockOutTime(clockOutTime);
+    // }
+
     @Override
-    public List<Attendance> getAttendancesByClockInTime(String clockInTime) {
-        return attendanceRepo.findByClockInTime(clockInTime);
+    public Attendance clockIn(Attendance attendance) {
+        attendance.setClockInTime(LocalTime.now());
+        attendance.setDate(LocalDate.now());
+        return attendanceRepo.save(attendance);
     }
 
     @Override
-    public List<Attendance> getAttendancesByClockOutTime(String clockOutTime) {
-        return attendanceRepo.findByClockOutTime(clockOutTime);
+    public Attendance clockOut(Long id) {
+        Attendance attendance = attendanceRepo.findById(id).orElse(null);
+        if (attendance != null) {
+            attendance.setClockOutTime(LocalTime.now());
+            return attendanceRepo.save(attendance);
+        }
+        return null;
     }
+    
 }
+

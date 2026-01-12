@@ -9,6 +9,10 @@ public interface JobDescriptionService {
     // Add JobDescription
     public JobDescription addJobDescription(JobDescription jobDescription);
 
+    // Add multiple JobDescriptions
+    public List<JobDescription> addJobDescriptions(List<JobDescription> jobDescriptions);
+
+
     // Get By Id
     public JobDescription getJobDescriptionById(Long id);
 

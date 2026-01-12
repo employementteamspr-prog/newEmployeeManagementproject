@@ -10,8 +10,10 @@ public interface AttendanceService {
     List<Attendance> getAllAttendences();
     Attendance updateAttendence(Long attendenceId, Attendance attendence);
     boolean deleteAttendence(Long   attendenceId);
-    List<Attendance> getAttendenceByDate(String date);
+    
     List<Attendance> addAttendences(List<Attendance> attendences);
-    List<Attendance> getAttendancesByClockInTime(String clockInTime);
-    List<Attendance> getAttendancesByClockOutTime(String clockOutTime);
+    // List<Attendance> getAttendancesByClockInTime(String clockInTime);
+    // List<Attendance> getAttendancesByClockOutTime(String clockOutTime);
+    Attendance clockIn(Attendance attendance);
+    Attendance clockOut(Long id);
 } 

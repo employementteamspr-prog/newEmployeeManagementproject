@@ -2,9 +2,12 @@ package com.examly.springapp.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.examly.springapp.model.JobDescription;
 import com.examly.springapp.repository.JobDescriptionRepo;
 
+@Service
 public class JobDescriptionServiceImpl implements JobDescriptionService {
 
     private JobDescriptionRepo jobDescriptionRepo;
@@ -49,12 +52,15 @@ public class JobDescriptionServiceImpl implements JobDescriptionService {
         return false;
     }
 
-    // public List<JobDescription> getJobDescriptionsByDepartment(Long departmentId) {
-    //     return jobDescriptionRepo.findByDepartment_DepartmentId(departmentId);
-    // }
+    @Override
+    public List<JobDescription> addJobDescriptions(List<JobDescription> jobDescriptions) {
+        return jobDescriptionRepo.saveAll(jobDescriptions);
+    }
 
     @Override
     public List<JobDescription> getJobDescriptionsByDepartment(Long departmentId) {
         return jobDescriptionRepo.findByDepartment_DepartmentId(departmentId);
     }
+
+    
 }
