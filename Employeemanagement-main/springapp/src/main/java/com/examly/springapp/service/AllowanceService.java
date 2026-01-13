@@ -2,11 +2,13 @@ package com.examly.springapp.service;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
+
 
 import com.examly.springapp.model.Allowance;
+import org.springframework.data.domain.Page;
 
-@Service
+
+
 public interface AllowanceService {
 
     // POST SINGLE ALLOWANCE
@@ -37,12 +39,26 @@ public interface AllowanceService {
     void deleteAllAllowances();
 
     //Pagination
-    List<Allowance> getAllowanceByPagination(int offset,int size);
+    Page<Allowance> getAllowanceByPagination(int offset,int size);
 
     //Pagination with sorting
-    public List<Allowance> getBySortingPagination(int offset,int size,String field,String direction);
-  
+    Page<Allowance> getBySortingPagination(int offset,int size,String field,String direction);
+
 
     //Sorting
     List<Allowance> getBySorting(String field,String direction);
+
+    //Sorting by ID
+    public List<Allowance> getBySortingID();
+
+    //Sorting by type
+    public List<Allowance> getBySortingType();
+
+    //Sorting by Amount
+    public List<Allowance> getBySortingAmount();
+
+    //Sorting by Frequency
+    public List<Allowance> getBySortingFrequency();
+
+
 }

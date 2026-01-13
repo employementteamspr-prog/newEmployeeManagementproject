@@ -3,10 +3,12 @@ package com.examly.springapp.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
 import com.examly.springapp.model.Leave;
 import com.examly.springapp.repository.LeaveRepo;
 
@@ -59,7 +61,7 @@ public class LeaveServiceImpl implements LeaveService{
         existingLeave.setEndDate(leave.getEndDate());
         existingLeave.setReason(leave.getReason());
         existingLeave.setStatus(leave.getStatus());
-        return leaveRepo.save(leave);
+        return leaveRepo.save(existingLeave);
     }
     //DELETE BY LEAVEID
     @Override
@@ -79,19 +81,19 @@ public class LeaveServiceImpl implements LeaveService{
 
     //pagination
     @Override
-    public List<Leave> getLeaveByPagination(int offset,int size){
+    public Page<Leave> getLeaveByPagination(int offset,int size){
         Pageable pageable=PageRequest.of(offset, size);
-        return leaveRepo.findAll(pageable).getContent();
+        return leaveRepo.findAll(pageable);
     }
 
     //Pagination and Sorting
     @Override
-    public List<Leave> getLeaveByPaginationAndSorting(int offset,int size,String field,String direction){
+    public Page<Leave> getLeaveByPaginationAndSorting(int offset,int size,String field,String direction){
         Sort sort= direction.equalsIgnoreCase("desc")?
         Sort.by(field).descending():
         Sort.by(field).ascending();
         Pageable pageable=PageRequest.of(offset,size,sort);
-        return leaveRepo.findAll(pageable).getContent();
+        return leaveRepo.findAll(pageable);
     }
 
     //Sorting only by field asc &desc
@@ -103,5 +105,41 @@ public class LeaveServiceImpl implements LeaveService{
         return leaveRepo.findAll(sortByField);
     }
 
+    //Sorting by ID
+     @Override
+    public List<Leave> getSortingById(){
+        Sort sortById=Sort.by("leaveId").ascending();
+        return leaveRepo.findAll(sortById);
+    }
+    //Sorting by Type
+     @Override
+    public List<Leave> getSortingByType(){
+        Sort sortByType=Sort.by("leaveType").ascending();
+        return leaveRepo.findAll(sortByType);
+    }
+    //Sorting by StartDate
+     @Override
+    public List<Leave> getSortingByStartDate(){
+        Sort sortByStartDate=Sort.by("startDate").ascending();
+        return leaveRepo.findAll(sortByStartDate);
+    }
+    //Sorting by EndDate
+     @Override
+    public List<Leave> getSortingByEndDate(){
+        Sort sortByEndDate=Sort.by("endDate").ascending();
+        return leaveRepo.findAll(sortByEndDate);
+    }
+    //Sorting by Status
+     @Override
+    public List<Leave> getSortingByStatus(){
+        Sort sortByStatus=Sort.by("status").ascending();
+        return leaveRepo.findAll(sortByStatus);
+    }
+    //Sorting by Reason
+    @Override
+    public List<Leave> getSortingByReason(){
+        Sort sortByReason=Sort.by("reason").ascending();
+        return leaveRepo.findAll(sortByReason);
+    }
 
 }

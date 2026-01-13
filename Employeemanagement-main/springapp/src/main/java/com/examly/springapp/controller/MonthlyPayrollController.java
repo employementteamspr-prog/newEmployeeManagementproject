@@ -4,6 +4,7 @@ package com.examly.springapp.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -104,11 +105,11 @@ public class MonthlyPayrollController {
     }
     //pagination
     @GetMapping("/payroll/page")
-    public ResponseEntity<List<MonthlyPayroll>> getByPagination(
+    public ResponseEntity<Page<MonthlyPayroll>> getByPagination(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
 
-            List<MonthlyPayroll> payrolls = monthlyPayrollService.getByPagination(page, size);
+            Page<MonthlyPayroll> payrolls = monthlyPayrollService.getByPagination(page, size);
             return new ResponseEntity<>(payrolls, HttpStatus.OK);
         }
         //sorting
@@ -122,15 +123,47 @@ public class MonthlyPayrollController {
         }
         //pagination and sorting
          @GetMapping("/payroll/page-sort")
-        public ResponseEntity<List<MonthlyPayroll>> getByPaginationAndSorting(
+        public ResponseEntity<Page<MonthlyPayroll>> getByPaginationAndSorting(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "id") String field,
             @RequestParam(defaultValue = "asc") String direction) {
 
-            List<MonthlyPayroll> payrolls = monthlyPayrollService.getByPaginationSorting(page, size, field, direction);
+            Page<MonthlyPayroll> payrolls = monthlyPayrollService.getByPaginationSorting(page, size, field, direction);
             return new ResponseEntity<>(payrolls, HttpStatus.OK);
         }
+    
+        //Sorting by ID
+        @GetMapping("/payroll/sort/id")
+        public ResponseEntity<List<MonthlyPayroll>> getBySortingID(){
+            List<MonthlyPayroll> payrolls=monthlyPayrollService.getBySortingID();
+            return new ResponseEntity<>(payrolls,HttpStatus.OK);
+        }
+        //Sorting by Basic Salary
+        @GetMapping("/payroll/sort/basicSalary")
+        public ResponseEntity<List<MonthlyPayroll>> getBySortingBasicSalary(){
+            List<MonthlyPayroll> payrolls=monthlyPayrollService.getBySortingBasicSalary();
+            return new ResponseEntity<>(payrolls,HttpStatus.OK);
+        }
+        //Sorting by Net Salary
+        @GetMapping("/payroll/sort/netSalary")
+        public ResponseEntity<List<MonthlyPayroll>> getBySortingNetSalary(){
+            List<MonthlyPayroll> payrolls=monthlyPayrollService.getBySortingNetSalary();
+            return new ResponseEntity<>(payrolls,HttpStatus.OK);
+        }
+        //Sorting by Deductions
+        @GetMapping("/payroll/sort/deductions")
+        public ResponseEntity<List<MonthlyPayroll>> getBySortingDeductions(){
+            List<MonthlyPayroll> payrolls=monthlyPayrollService.getBySortingDeductions();
+            return new ResponseEntity<>(payrolls,HttpStatus.OK);
+        }
+        //Sorting by Month
+        @GetMapping("/payroll/sort/month")
+        public ResponseEntity<List<MonthlyPayroll>> getBySortingMonth(){
+            List<MonthlyPayroll> payrolls=monthlyPayrollService.getBySortingMonth();
+            return new ResponseEntity<>(payrolls,HttpStatus.OK);
+        }
+        
 
 
 }

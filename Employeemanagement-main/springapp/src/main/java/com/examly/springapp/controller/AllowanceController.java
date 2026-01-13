@@ -3,6 +3,7 @@ package com.examly.springapp.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -115,11 +116,11 @@ public class AllowanceController {
 
     //GET BY PAGINATION
     @GetMapping("/allowance/page")
-     public ResponseEntity<List<Allowance>> getAllowancesByPage(
+     public ResponseEntity<Page<Allowance>> getAllowancesByPage(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
 
-            List<Allowance> allowances = allowanceService.getAllowanceByPagination(page, size);
+            Page<Allowance> allowances = allowanceService.getAllowanceByPagination(page, size);
             return new ResponseEntity<>(allowances, HttpStatus.OK);
         }
 
@@ -136,15 +137,42 @@ public class AllowanceController {
 
     //by pagination and sorting
     @GetMapping("/allowance/page_sort")
-    public ResponseEntity<List<Allowance>> getAllowances(
+    public ResponseEntity<Page<Allowance>> getAllowances(
         @RequestParam(defaultValue = "0") int page,
         @RequestParam(defaultValue = "10") int size,
         @RequestParam(defaultValue = "id") String field,
         @RequestParam(defaultValue = "asc") String direction) {
 
-        List<Allowance> allowances = allowanceService.getBySortingPagination(page, size, field, direction);
+        Page<Allowance> allowances = allowanceService.getBySortingPagination(page, size, field, direction);
         return new ResponseEntity<>(allowances, HttpStatus.OK);
     }
+    
+    //sorting by individual field
+    //sorting by ID
+    @GetMapping("/allowance/sort/id")
+    public ResponseEntity<List<Allowance>> getBySortingID(){
+        List<Allowance> allowances=allowanceService.getBySortingID();
+        return new ResponseEntity<>(allowances,HttpStatus.OK);
+    }
+    //sorting by Type
+    @GetMapping("/allowance/sort/type")
+    public ResponseEntity<List<Allowance>> getBySortingType(){
+        List<Allowance> allowances=allowanceService.getBySortingType();
+        return new ResponseEntity<>(allowances,HttpStatus.OK);
+    }
+    //sorting by Amount
+    @GetMapping("/allowance/sort/amount")
+    public ResponseEntity<List<Allowance>> getBySortingAmount(){
+        List<Allowance> allowances=allowanceService.getBySortingAmount();
+        return new ResponseEntity<>(allowances,HttpStatus.OK);
+    }
+    //sorting by Frequency
+    @GetMapping("/allowance/sort/frequency")
+    public ResponseEntity<List<Allowance>> getBySortingFrequency(){
+        List<Allowance> allowances=allowanceService.getBySortingFrequency();
+        return new ResponseEntity<>(allowances,HttpStatus.OK);
+    }
+    
 
 }
 

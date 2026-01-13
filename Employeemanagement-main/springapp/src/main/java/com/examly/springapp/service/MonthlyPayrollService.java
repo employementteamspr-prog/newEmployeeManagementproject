@@ -2,11 +2,11 @@ package com.examly.springapp.service;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
 
 import com.examly.springapp.model.MonthlyPayroll;
 
-@Service
+
 public interface MonthlyPayrollService {
 
      // SAVE ONE PAYROLL
@@ -34,12 +34,26 @@ public interface MonthlyPayrollService {
      void deleteAllMonthlyPayroll();
 
     //Pagination
-    List<MonthlyPayroll> getByPagination(int offset,int size);
+    Page<MonthlyPayroll> getByPagination(int offset,int size);
 
     //Pagination with sorting
-    List<MonthlyPayroll> getByPaginationSorting(int offset,int size,String field,String direction);
+    Page<MonthlyPayroll> getByPaginationSorting(int offset,int size,String field,String direction);
 
     //Sorting only by field asc &desc
     List<MonthlyPayroll> getBySorting(String field,String direction);
 
+    //Sorting by ID
+    public List<MonthlyPayroll> getBySortingID();
+
+    //Sorting by Basic Salary
+    public List<MonthlyPayroll> getBySortingBasicSalary();
+
+    //Sorting by Net Salary
+    public List<MonthlyPayroll> getBySortingNetSalary();
+
+    //Sorting by Deductions
+    public List<MonthlyPayroll> getBySortingDeductions();
+
+    //Sorting by Month
+    public List<MonthlyPayroll> getBySortingMonth();
 }

@@ -3,6 +3,7 @@ package com.examly.springapp.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -79,19 +80,19 @@ public class MonthlyPayrollServiceImpl implements MonthlyPayrollService{
 
     //Pagination
     @Override
-    public List<MonthlyPayroll> getByPagination(int offset,int size){
+    public Page<MonthlyPayroll> getByPagination(int offset,int size){
         Pageable pageable = PageRequest.of(offset,size);
-        return monthlyPayrollRepo.findAll(pageable).getContent();
+        return monthlyPayrollRepo.findAll(pageable);
     }
 
     //pagination with sorting
     @Override
-    public List<MonthlyPayroll> getByPaginationSorting (int offset,int size,String field,String direction){
+    public Page<MonthlyPayroll> getByPaginationSorting (int offset,int size,String field,String direction){
           Sort sortByField=direction.equalsIgnoreCase("desc")?
             Sort.by(field).descending():
             Sort.by(field).ascending();
         Pageable pageable=PageRequest.of(offset,size,sortByField);
-        return monthlyPayrollRepo.findAll(pageable).getContent();
+        return monthlyPayrollRepo.findAll(pageable);
     }
 
     //Sorting only by field asc &desc
@@ -102,6 +103,40 @@ public class MonthlyPayrollServiceImpl implements MonthlyPayrollService{
         Sort.by(field).ascending();
         return monthlyPayrollRepo.findAll(sortByField);
     }   
+
+    //Sorting by ID
+    @Override
+    public List<MonthlyPayroll> getBySortingID(){
+        Sort sortById=Sort.by("monthlyPayrollId").ascending();
+        return monthlyPayrollRepo.findAll(sortById);
+    }
+    //Sorting by Basic Salary
+    @Override
+    public List<MonthlyPayroll> getBySortingBasicSalary(){
+        Sort sortByBasicSalary=Sort.by("mBasicSalary").ascending();
+        return monthlyPayrollRepo.findAll(sortByBasicSalary);
+    }
+    //Sorting by Net Salary
+        @Override
+    public List<MonthlyPayroll> getBySortingNetSalary(){
+        Sort sortByNetSalary=Sort.by("mNetSalary").ascending();
+        return monthlyPayrollRepo.findAll(sortByNetSalary);
+    }
+    //Sorting by Deductions
+        @Override
+
+    public List<MonthlyPayroll> getBySortingDeductions(){
+        Sort sortByDeductions=Sort.by("mDeductions").ascending();
+        return monthlyPayrollRepo.findAll(sortByDeductions);
+    }
+    //Sorting by Month
+        @Override
+
+    public List<MonthlyPayroll> getBySortingMonth(){
+        Sort sortByMonth=Sort.by("month").ascending();
+        return monthlyPayrollRepo.findAll(sortByMonth);
+    }
+
 }
 
     

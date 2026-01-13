@@ -2,11 +2,11 @@ package com.examly.springapp.service;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
 
 import com.examly.springapp.model.Leave;
 
-@Service
+
 
 public interface LeaveService {
      // SAVE ONE LEAVE
@@ -34,12 +34,31 @@ public interface LeaveService {
     void deleteAllLeaves();
 
     //Pagination
-    List<Leave> getLeaveByPagination(int offset,int size);
+    Page<Leave> getLeaveByPagination(int offset,int size);
 
     //Pagination and Sorting
-    List<Leave> getLeaveByPaginationAndSorting(int offset,int size,String field,String direction);
+    Page<Leave> getLeaveByPaginationAndSorting(int offset,int size,String field,String direction);
 
     //Sorting only by field asc &desc
     List<Leave> getBySorting(String field,String direction);
+
+    //Sorting by ID
+    public List<Leave> getSortingById();
+
+    //Sorting by type
+    public List<Leave> getSortingByType();
+
+    //Sorting by Start Date
+    public List<Leave> getSortingByStartDate();
+
+    //Sorting by End Date
+    public List<Leave> getSortingByEndDate();
+
+    //Sorting by Status
+    public List<Leave> getSortingByStatus();
+
+    //Sorting by Reason
+    public List<Leave> getSortingByReason();
+
 }
     

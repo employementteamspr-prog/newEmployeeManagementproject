@@ -3,6 +3,7 @@ package com.examly.springapp.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -105,22 +106,22 @@ public class LeaveController {
 
     //BY PAGINATION AND SORTING
     @GetMapping("/leave/page_sort")
-    public ResponseEntity<List<Leave>> getLeaves(
+    public ResponseEntity<Page<Leave>> getLeaves(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "id") String field,
             @RequestParam(defaultValue = "asc") String direction) {
 
-            List<Leave> leaves = leaveService.getLeaveByPaginationAndSorting(page, size, field, direction);
+            Page<Leave> leaves = leaveService.getLeaveByPaginationAndSorting(page, size, field, direction);
             return new ResponseEntity<>(leaves, HttpStatus.OK);
     }
     //pagination
     @GetMapping("/leave/page")
-    public ResponseEntity<List<Leave>> getLeavesByPage(
+    public ResponseEntity<Page<Leave>> getLeavesByPage(
         @RequestParam(defaultValue = "0") int page,
         @RequestParam(defaultValue = "10") int size) {
 
-            List<Leave> leaves = leaveService.getLeaveByPagination(page, size);
+            Page<Leave> leaves = leaveService.getLeaveByPagination(page, size);
             return new ResponseEntity<>(leaves, HttpStatus.OK);
         }
 
@@ -134,6 +135,42 @@ public class LeaveController {
             return new ResponseEntity<>(leaves, HttpStatus.OK);
         }
 
-
+    //Sorting by ID
+    @GetMapping("/leave/sort/id")
+    public ResponseEntity<List<Leave>> getLeavesSortedById(){
+        List<Leave> leaves=leaveService.getSortingById();
+        return new ResponseEntity<>(leaves,HttpStatus.OK);
     }
+    //Sorting by Type
+    @GetMapping("/leave/sort/type")
+    public ResponseEntity<List<Leave>> getLeavesSortedByType(){
+        List<Leave> leaves=leaveService.getSortingByType();
+        return new ResponseEntity<>(leaves,HttpStatus.OK);
+    }
+    //Sorting by Start Date
+    @GetMapping("/leave/sort/startDate")
+    public ResponseEntity<List<Leave>> getLeavesSortedByStartDate(){
+        List<Leave> leaves=leaveService.getSortingByStartDate();
+        return new ResponseEntity<>(leaves,HttpStatus.OK);
+    }
+    //Sorting by End Date
+    @GetMapping("/leave/sort/endDate")
+    public ResponseEntity<List<Leave>> getLeavesSortedByEndDate(){
+        List<Leave> leaves=leaveService.getSortingByEndDate();
+        return new ResponseEntity<>(leaves,HttpStatus.OK);
+    }
+    //Sorting by Status
+    @GetMapping("/leave/sort/status")
+    public ResponseEntity<List<Leave>> getLeavesSortedByStatus(){
+        List<Leave> leaves=leaveService.getSortingByStatus();
+        return new ResponseEntity<>(leaves,HttpStatus.OK);
+    }
+    //Sorting by Reason
+    @GetMapping("/leave/sort/reason")
+    public ResponseEntity<List<Leave>> getLeavesSortedByReason(){
+        List<Leave> leaves=leaveService.getSortingByReason();
+        return new ResponseEntity<>(leaves,HttpStatus.OK);
+    }
+    
+}
 

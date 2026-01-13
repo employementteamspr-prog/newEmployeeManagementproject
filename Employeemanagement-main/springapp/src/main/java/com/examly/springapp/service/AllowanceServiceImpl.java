@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
 
 import com.examly.springapp.model.Allowance;
 import com.examly.springapp.repository.AllowanceRepo;
@@ -83,20 +84,20 @@ public class AllowanceServiceImpl implements AllowanceService {
 
     // PAGINATION
     @Override
-    public List<Allowance> getAllowanceByPagination(int offset, int size){
+    public Page<Allowance> getAllowanceByPagination(int offset, int size){
         Pageable pageable = PageRequest.of(offset, size);
-        return allowanceRepo.findAll(pageable).getContent();
+        return allowanceRepo.findAll(pageable);
     }
 
     // PAGINATION WITH SORTING
     @Override
-    public List<Allowance> getBySortingPagination(int offset, int size, String field, String direction){
+    public Page<Allowance> getBySortingPagination(int offset, int size, String field, String direction){
         Sort sort = direction.equalsIgnoreCase("desc") ?
                     Sort.by(field).descending() :
                     Sort.by(field).ascending();
 
         Pageable pageable = PageRequest.of(offset, size, sort);
-        return allowanceRepo.findAll(pageable).getContent();
+        return allowanceRepo.findAll(pageable);
     }
 
     // Sorting by field asc & desc
@@ -107,5 +108,35 @@ public class AllowanceServiceImpl implements AllowanceService {
                     Sort.by(field).ascending();
 
         return allowanceRepo.findAll(sort);
+    }
+
+    //sorting by individual field
+    @Override
+    public List<Allowance> getBySortingID(){
+        Sort sortById=Sort.by("allowanceId").ascending();
+        return allowanceRepo.findAll(sortById);
+
+    }
+
+    //sorting  by type
+    @Override
+    public List<Allowance> getBySortingType(){
+        Sort sortByType=Sort.by("allowanceType").ascending();
+        return allowanceRepo.findAll(sortByType);
+
+    }
+    //sorting by amount
+    @Override
+    public List<Allowance> getBySortingAmount(){
+        Sort sortByAmount=Sort.by("amount").ascending();
+        return allowanceRepo.findAll(sortByAmount);
+
+    }
+    //sorting by frequency
+    @Override   
+    public List<Allowance> getBySortingFrequency(){
+        Sort sortByFrequency=Sort.by("frequency").ascending();
+        return allowanceRepo.findAll(sortByFrequency);
+
     }
 }
