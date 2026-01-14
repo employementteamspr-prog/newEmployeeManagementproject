@@ -3,77 +3,44 @@ package com.examly.springapp.service;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
 
 import com.examly.springapp.model.User;
-import com.examly.springapp.repository.UserRepo;
 
-@Service
-public class UserService {
-
-    @Autowired
-    private UserRepo userRepo;
+public interface UserService {
 
     // ===================== POST =====================
-
-    // Save single user
-    public User saveUser(User user) {
-        return userRepo.save(user);
-    }
-
-    // Save multiple users
-    public List<User> saveAllUsers(List<User> users) {
-        return userRepo.saveAll(users);
-    }
+    User saveUser(User user);
+    List<User> saveAllUsers(List<User> users);
 
     // ===================== GET =====================
-
-    // Get all users
-    public List<User> getAllUsers() {
-        return userRepo.findAll();
-    }
-
-    // Get single user by ID
-    public Optional<User> getUserById(Long id) {
-        return userRepo.findById(id);
-    }
-
-    // Get single user by username
-    public Optional<User> getUserByUsername(String username) {
-        return userRepo.findByUsername(username);
-    }
-
-    // Get single user by email
-    public Optional<User> getUserByEmail(String email) {
-        return userRepo.findByEmail(email);
-    }
-
-    // Get users by role (single or multiple)
-    public List<User> getUsersByRole(String role) {
-        return userRepo.findByRole(role);
-    }
+    List<User> getAllUsers();
+    Optional<User> getUserById(Long id);
+    Optional<User> getUserByUsername(String username);
+    Optional<User> getUserByEmail(String email);
+    List<User> getUsersByRole(String role);
 
     // ===================== PUT =====================
+    User updateUser(Long id, User user);
 
-    // Update user by ID
-    public User updateUser(Long id, User updatedUser) {
-        User existingUser = userRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+    // ===================== DELETE =====================
+    boolean deleteUserById(Long id);
 
-        existingUser.setUsername(updatedUser.getUsername());
-        existingUser.setPassword(updatedUser.getPassword());
-        existingUser.setEmail(updatedUser.getEmail());
-        existingUser.setRole(updatedUser.getRole());
+    // ===================== PAGINATION =====================
+    Page<User> getUsersByPagination(int page, int size);
 
-        return userRepo.save(existingUser);
-    }
-    public boolean deleteUserById(Long id) {
-    if (userRepo.existsById(id)) {
-        userRepo.deleteById(id);
-        return true;   // delete successful
-    }
-    return false;      // user not found
-}
+    // ===================== PAGINATION WITH SORTING =====================
+    Page<User> getUsersByPaginationAndSorting(
+            int page,
+            int size,
+            String field,
+            String direction);
 
+    // ===================== SORTING =====================
+    List<User> getUsersBySorting(String field, String direction);
+
+    // ===================== SORTING BY INDIVIDUAL FIELDS =====================
+    List<User> sortByUserId();
+    List<User> sortByUsername();
+    List<User> sortByRole();
 }

@@ -4,53 +4,38 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
 
 import com.examly.springapp.model.Task;
-import com.examly.springapp.repository.TaskRepo;
 
-@Service
-public class TaskService {
+public interface TaskService {
 
-    @Autowired
-    private TaskRepo taskRepo;
+    // POST
+    Task addTask(Task task);
+    List<Task> addAllTasks(List<Task> tasks);
 
-    public Task addTask(Task task) {
-        return taskRepo.save(task);
-    }
-    public List<Task> addAllTasks(List<Task> tasks) {
-        return taskRepo.saveAll(tasks);
-    }
-    public List<Task> getAllTasks() {
-        return taskRepo.findAll();
-    }
-    public Optional<Task> getTaskById(Long id) {
-        return taskRepo.findById(id);
-    }
-    public Optional<Task> getTaskByEmployeeId(Long employeeId) {
-        return taskRepo.findByEmployeeId(employeeId);
-    }
-    public List<Task> getTasksByStatus(String status) {
-        return taskRepo.findByStatus(status);
-    }
-    public List<Task> getTasksByDeadline(Date deadline) {
-        return taskRepo.findByDeadline(deadline);
-    }
-    public Task updateTask(Long id, Task updatedTask) {
-        Task existingTask = taskRepo.findById(id).orElseThrow();
-        existingTask.setEmployeeId(updatedTask.getEmployeeId());
-        existingTask.setDescription(updatedTask.getDescription());
-        existingTask.setStatus(updatedTask.getStatus());
-        existingTask.setDeadline(updatedTask.getDeadline());
+    // GET
+    List<Task> getAllTasks();
+    Optional<Task> getTaskById(Long id);
+    Optional<Task> getTaskByEmployeeId(Long employeeId);
+    List<Task> getTasksByStatus(String status);
+    List<Task> getTasksByDeadline(Date deadline);
 
-        return taskRepo.save(existingTask);
-    }
-    public boolean deleteTaskById(Long id) {
-        if (taskRepo.existsById(id)) {
-            taskRepo.deleteById(id);
-            return true;
-        }
-        return false;
-    }
+    // PUT
+    Task updateTask(Long id, Task task);
+
+    // DELETE
+    boolean deleteTaskById(Long id);
+
+    // PAGINATION
+    Page<Task> getTasksByPagination(int page, int size);
+
+    // PAGINATION WITH SORTING
+    Page<Task> getTasksByPaginationAndSorting(int page, int size, String field, String direction);
+    
+     List<Task> getTasksBySorting(String field, String direction);
+    // SORTING
+    List<Task> sortByTaskId();
+    List<Task> sortByDeadline();
+    List<Task> sortByStatus();
 }
