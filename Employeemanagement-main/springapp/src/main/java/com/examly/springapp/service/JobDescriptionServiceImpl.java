@@ -2,6 +2,8 @@ package com.examly.springapp.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.examly.springapp.model.JobDescription;
@@ -60,6 +62,11 @@ public class JobDescriptionServiceImpl implements JobDescriptionService {
     @Override
     public List<JobDescription> getJobDescriptionsByDepartment(Long departmentId) {
         return jobDescriptionRepo.findByDepartment_DepartmentId(departmentId);
+    }
+
+    @Override
+    public Page<JobDescription> getJobDescriptionsWithPagination(Pageable pageable) {
+        return jobDescriptionRepo.findAll(pageable);
     }
 
     

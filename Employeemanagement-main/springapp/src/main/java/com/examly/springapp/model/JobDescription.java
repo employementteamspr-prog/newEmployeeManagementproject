@@ -1,11 +1,14 @@
 package com.examly.springapp.model;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class JobDescription{
@@ -17,6 +20,9 @@ public class JobDescription{
     @ManyToOne
     @JoinColumn(name="department_id")
     private Department department;
+
+    @OneToMany
+    private List<Employee> employees;
 
     public JobDescription() {
     }
@@ -58,5 +64,4 @@ public class JobDescription{
     public void setDepartment(Department department) {
         this.department = department;
     }
-
 }

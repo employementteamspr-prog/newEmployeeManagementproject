@@ -6,6 +6,8 @@ import com.examly.springapp.model.Attendance;
 
 public interface  AttendanceRepo extends JpaRepository<Attendance, Long>{
 
+    Attendance findByEmployeeId(Long employeeId);
+
     
 
     // public List<Attendance> findByClockInTime(String clockInTime);

@@ -2,6 +2,8 @@ package com.examly.springapp.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.examly.springapp.model.Department;
@@ -60,4 +62,15 @@ public class DepartmentServiceImpl implements DepartmentService {
     public Department getDepartmentByDepartmentName(String departmentName) {
         return departmentRepo.findByDepartmentName(departmentName);
     }
+
+    @Override
+    public Department getDepartmentByEmployee(Long employeeId) {
+        return departmentRepo.findByEmployees_Id(employeeId);
+    }
+
+    @Override
+    public Page<Department> getDepartmentsWithPagination(Pageable pageable) {
+        return departmentRepo.findAll(pageable);
+    }
+    
 }

@@ -1,9 +1,12 @@
 package com.examly.springapp.model;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Department {
@@ -12,7 +15,8 @@ public class Department {
     private Long departmentId;
     private String departmentName;
     private String description;
-
+    @OneToMany
+    private List<Employee> employees;
     public Department() {
     }
 
@@ -43,8 +47,6 @@ public class Department {
 
     public void setDescription(String description) {
         this.description = description;
+    
     }
-
-
-
 }

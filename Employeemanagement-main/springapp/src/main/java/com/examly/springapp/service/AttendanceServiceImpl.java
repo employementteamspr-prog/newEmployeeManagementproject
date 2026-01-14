@@ -6,6 +6,8 @@ import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.examly.springapp.model.Attendance;
@@ -60,15 +62,7 @@ public class AttendanceServiceImpl implements AttendanceService
         return attendanceRepo.saveAll(attendences);
     }
 
-    // @Override
-    // public List<Attendance> getAttendancesByClockInTime(String clockInTime) {
-    //     return attendanceRepo.findByClockInTime(clockInTime);
-    // }
-
-    // @Override
-    // public List<Attendance> getAttendancesByClockOutTime(String clockOutTime) {
-    //     return attendanceRepo.findByClockOutTime(clockOutTime);
-    // }
+    
 
     @Override
     public Attendance clockIn(Attendance attendance) {
@@ -85,6 +79,16 @@ public class AttendanceServiceImpl implements AttendanceService
             return attendanceRepo.save(attendance);
         }
         return null;
+    }
+
+    @Override
+    public Attendance getAttendanceByEmployeeId(Long employeeId) {
+        return attendanceRepo.findByEmployeeId(employeeId);
+    }
+
+    @Override
+    public Page<Attendance> getAttendancesWithPagination(Pageable pageable) {
+        return attendanceRepo.findAll(pageable);
     }
     
 }
