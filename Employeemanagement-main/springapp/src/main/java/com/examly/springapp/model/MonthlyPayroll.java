@@ -1,10 +1,15 @@
 package com.examly.springapp.model;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 @Entity
 public class MonthlyPayroll {
     @Id
@@ -15,6 +20,18 @@ public class MonthlyPayroll {
     private double mNetSalary;
     private double mDeductions;
     private int month;//1-12
+
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="employeeId",nullable=false)
+    private Employee employee;
+
+    @OneToMany(mappedBy="monthlyPayrollId",fetch=FetchType.LAZY)
+    private List<Leave> leaves;
+
+    @OneToMany(mappedBy="monthlyPayrollId",fetch=FetchType.LAZY)
+    @JoinColumn(name="employeeId",nullable=false)
+    private List<Attendance> attendances;
+
 
     //Empty Constructor
     public MonthlyPayroll() {
