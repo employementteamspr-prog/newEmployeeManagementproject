@@ -2,6 +2,7 @@ package com.examly.springapp.model;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -21,7 +22,7 @@ public class MonthlyPayroll {
     private double mDeductions;
     private int month;//1-12
 
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
     @JoinColumn(name="employeeId",nullable=false)
     private Employee employee;
 
