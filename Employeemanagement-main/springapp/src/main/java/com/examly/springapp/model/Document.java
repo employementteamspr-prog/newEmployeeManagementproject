@@ -13,15 +13,20 @@ public class Document {
     @Lob
     @Column(columnDefinition = "LONGBLOB")
     private byte[] data;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employeeId")
+    private Employee employee;
     
     public Document() {
     }
 
-    public Document(Long docId, String docName, LocalDate uploadDate, byte[] data) {
+    public Document(Long docId, String docName, LocalDate uploadDate, byte[] data, Employee employee) {
         this.docId = docId;
         this.docName = docName;
         this.uploadDate = uploadDate;
         this.data = data;
+        this.employee = employee;
     }
 
     public Long getDocId() {
@@ -54,6 +59,12 @@ public class Document {
 
     public void setData(byte[] data) {
         this.data = data;
+    }
+    public Employee getEmployee() {
+        return employee;
+    }
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
     
 }
