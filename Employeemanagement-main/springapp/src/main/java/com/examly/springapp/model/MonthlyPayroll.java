@@ -29,8 +29,7 @@ public class MonthlyPayroll {
     @OneToMany(mappedBy="monthlyPayrollId",fetch=FetchType.LAZY)
     private List<Leave> leaves;
 
-    @OneToMany(mappedBy="monthlyPayrollId",fetch=FetchType.LAZY)
-    @JoinColumn(name="employeeId",nullable=false)
+    @OneToMany(mappedBy = "monthlyPayroll", fetch = FetchType.LAZY)
     private List<Attendance> attendances;
 
 
