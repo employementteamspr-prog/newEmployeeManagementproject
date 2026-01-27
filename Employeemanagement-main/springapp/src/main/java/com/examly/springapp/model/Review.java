@@ -2,11 +2,13 @@
 package com.examly.springapp.model;
 import java.time.LocalDate;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
 @Entity
 public class Review {
     @Id
+   
     private Long reviewId;
     private Long reviewerId;
     private String comments;

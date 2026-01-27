@@ -21,6 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.examly.springapp.model.Review;
 import com.examly.springapp.service.ReviewService;
 
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 @RestController
 @RequestMapping("/api")
 public class ReviewController {
@@ -28,6 +31,10 @@ public class ReviewController {
     @Autowired
     ReviewService reviewService;
 
+    @ApiResponses(value={
+        @ApiResponse(responseCode="201",description="Review Created Successfully"),
+        @ApiResponse(responseCode="404",description="Not Found")
+    })
     @PostMapping("/review")
     public ResponseEntity<Review> saveReview(@RequestBody Review review){
            Review saved=reviewService.saveReview(review);
