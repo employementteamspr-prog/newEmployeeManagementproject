@@ -1,7 +1,7 @@
 package com.examly.springapp.controller;
-
 import java.time.LocalDate;
 import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.web.bind.annotation.RestController;
 
 import com.examly.springapp.model.Employee;
@@ -23,22 +24,35 @@ import com.examly.springapp.service.EmployeeService;
 
 @RestController
 @RequestMapping("/api")
+
 public class EmployeeController {
     
     @Autowired
     EmployeeService employeeService;
 
+    //==============================
+    // Post one employee
+    //==============================
+    
     @PostMapping("/employee")
     public ResponseEntity<Employee> saveEmployee(@RequestBody Employee employee){
         Employee saved=employeeService.saveEmployee(employee);
         return new ResponseEntity<>(saved,HttpStatus.CREATED);
     }
 
+    //==============================
+    // Post multiple employees
+    //==============================
+
     @PostMapping("/employees")
     public ResponseEntity<List<Employee>> saveEmployees(@RequestBody List<Employee> employees){
         List<Employee> savedEmployees=employeeService.saveEmployees(employees);
         return new ResponseEntity<>(savedEmployees,HttpStatus.CREATED);
     }
+
+    //==============================
+    // Get all employees
+    //==============================
 
     @GetMapping("/employees")
     public ResponseEntity<List<Employee>> getAllEmployees(){
@@ -50,6 +64,10 @@ public class EmployeeController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    //==============================
+    // Get employee by ID
+    //==============================
+
     @GetMapping("/employee/id/{id}")
     public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id){
         Employee employee=employeeService.getEmployeeById(id);
@@ -60,6 +78,10 @@ public class EmployeeController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    //==============================
+    // Get employee by name
+    //==============================
+
     @GetMapping("/employee/name/{name}")
     public ResponseEntity<Employee> getEmployeeByName(@PathVariable String name){
         Employee employee=employeeService.getEmployeeByName(name);
@@ -69,7 +91,11 @@ public class EmployeeController {
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    //==============================
     // Get employee by date of joining
+    //==============================
+
     @GetMapping("/employee/date/{date}")
     public ResponseEntity<Employee> getEmployeeByDateOfJoining(
             @PathVariable
@@ -83,7 +109,10 @@ public class EmployeeController {
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
+    //==============================
     // Get employee by job role ID
+    //==============================
+
     @GetMapping("/jobrole/{jobRoleId}")
     public ResponseEntity<Employee> getEmployeeByJobRoleId(@PathVariable int jobRoleId) {
         Employee employee = employeeService.getEmployeeByJobRoleId(jobRoleId);
@@ -94,7 +123,10 @@ public class EmployeeController {
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
+    //==============================
     // Update employee by ID
+    //==============================
+
     @PutMapping("/employee/{id}")
     public ResponseEntity<Employee> updateEmployeeById(@PathVariable Long id) {
         Employee updated = employeeService.updateEmployeeById(id);
@@ -105,7 +137,10 @@ public class EmployeeController {
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
-    // Delete employee by ID
+    //==============================
+    // Delete employee by ID\
+    //==============================
+
     @DeleteMapping("/employee/{id}")
     public ResponseEntity<Boolean> deleteEmployeeById(@PathVariable Long id) {
         boolean deleted = employeeService.deletEmployeeById(id);
@@ -116,7 +151,10 @@ public class EmployeeController {
         return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
     }
 
+    //==============================
     // Delete all employees
+    //==============================
+
     @DeleteMapping("/employee")
     public ResponseEntity<Boolean> deleteEmployees() {
         boolean deleted = employeeService.deleteEmployees();
@@ -126,9 +164,11 @@ public class EmployeeController {
         }
         return new ResponseEntity<>(false, HttpStatus.NO_CONTENT);
     }
+
     // ===============================
     // PAGINATION ONLY
     // ===============================
+
     @GetMapping("/employees/page")
     public ResponseEntity<Page<Employee>> getEmployeesWithPagination(
             @RequestParam int page,
@@ -143,6 +183,7 @@ public class EmployeeController {
     // ===============================
     // SORTING ONLY
     // ===============================
+
     @GetMapping("/employees/sort")
     public ResponseEntity<List<Employee>> getEmployeesWithSorting(
             @RequestParam String field,
@@ -157,6 +198,7 @@ public class EmployeeController {
     // ===============================
     // PAGINATION + SORTING
     // ===============================
+
     @GetMapping("/employees/page-sort")
     public ResponseEntity<Page<Employee>> getEmployeesWithPaginationAndSorting(
             @RequestParam int page,
@@ -174,6 +216,7 @@ public class EmployeeController {
     // ===============================
     // SORT BY SPECIFIC FIELDS
     // ===============================
+
     @GetMapping("/employees/sort/name")
     public List<Employee> sortByName() {
         return employeeService.sortByName();

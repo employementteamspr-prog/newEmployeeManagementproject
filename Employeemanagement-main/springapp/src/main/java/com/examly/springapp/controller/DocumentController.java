@@ -1,9 +1,7 @@
 package com.examly.springapp.controller;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -12,13 +10,12 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-
 import com.examly.springapp.model.Document;
 import com.examly.springapp.service.DocumentService;
 
 @RestController
 @RequestMapping("/api/documents")
+
 public class DocumentController {
 
     @Autowired
@@ -27,6 +24,7 @@ public class DocumentController {
     // ===============================
     // UPLOAD SINGLE DOCUMENT (PDF)
     // ===============================
+
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Document> uploadDocument(
             @RequestParam("docId") Long docId,
@@ -34,17 +32,14 @@ public class DocumentController {
             @RequestParam("uploadDate")
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate uploadDate,
             @RequestParam("file") MultipartFile file) {
-
         try {
             Document document = new Document();
             document.setDocId(docId);
             document.setDocName(docName);
             document.setUploadDate(uploadDate);
             document.setData(file.getBytes());
-
             Document saved = documentService.saveDocument(document);
             return new ResponseEntity<>(saved, HttpStatus.CREATED);
-
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -53,13 +48,13 @@ public class DocumentController {
     // ===============================
     // UPLOAD MULTIPLE DOCUMENTS
     // ===============================
+
     @PostMapping(value = "/multiple", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<List<Document>> uploadMultipleDocuments(
             @RequestParam("files") MultipartFile[] files) {
 
         try {
             List<Document> documents = new ArrayList<>();
-
             for (MultipartFile file : files) {
                 Document doc = new Document();
                 doc.setDocName(file.getOriginalFilename());
@@ -79,6 +74,7 @@ public class DocumentController {
     // ===============================
     // VIEW DOCUMENT BY ID (INLINE)
     // ===============================
+
     @GetMapping(value = "/view/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<byte[]> viewDocument(@PathVariable Long id) {
 
@@ -91,13 +87,13 @@ public class DocumentController {
                             "inline; filename=\"" + document.getDocName() + ".pdf\"")
                     .body(document.getData());
         }
-
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     // ===============================
     // DOWNLOAD DOCUMENT BY ID
     // ===============================
+
     @GetMapping(value = "/download/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<byte[]> downloadDocument(@PathVariable Long id) {
 
@@ -109,13 +105,13 @@ public class DocumentController {
                             "attachment; filename=\"" + document.getDocName() + ".pdf\"")
                     .body(document.getData());
         }
-
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     // ===============================
     // VIEW DOCUMENT BY NAME
     // ===============================
+
     @GetMapping(value = "/view/name/{name}", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<byte[]> viewDocumentByName(@PathVariable String name) {
 
@@ -133,8 +129,9 @@ public class DocumentController {
     }
 
     // ===============================
-    // VIEW DOCUMENT BY UPLOAD DATE
+    //  VIEW DOCUMENT BY UPLOAD DATE
     // ===============================
+
     @GetMapping(value = "/view/date/{date}", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<byte[]> viewDocumentByDate(
             @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
@@ -153,13 +150,13 @@ public class DocumentController {
     }
 
     // ===============================
-    // VIEW ALL DOCUMENT METADATA
+    //   VIEW ALL DOCUMENT METADATA
     // ===============================
+
     @GetMapping
     public ResponseEntity<List<Document>> getAllDocuments() {
 
         List<Document> documents = documentService.getDocuments();
-
         if (!documents.isEmpty()) {
             return new ResponseEntity<>(documents, HttpStatus.OK);
         }
@@ -170,6 +167,7 @@ public class DocumentController {
     // ===============================
     // UPDATE DOCUMENT BY ID
     // ===============================
+
     @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Document> updateDocumentById(
             @PathVariable Long id,
@@ -177,7 +175,6 @@ public class DocumentController {
             @RequestParam("uploadDate")
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate uploadDate,
             @RequestParam("file") MultipartFile file) {
-
         try {
             Document document = new Document();
             document.setDocName(docName);
@@ -189,10 +186,10 @@ public class DocumentController {
             if (updated != null) {
                 return new ResponseEntity<>(updated, HttpStatus.OK);
             }
-
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
-        } catch (Exception e) {
+            } 
+            catch (Exception e) 
+            {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
@@ -200,6 +197,7 @@ public class DocumentController {
     // ===============================
     // DELETE DOCUMENT BY ID
     // ===============================
+
     @DeleteMapping("/id/{id}")
     public ResponseEntity<String> deleteDocumentById(@PathVariable Long id) {
 
@@ -208,13 +206,13 @@ public class DocumentController {
         if (deleted) {
             return new ResponseEntity<>("Document deleted successfully", HttpStatus.OK);
         }
-
         return new ResponseEntity<>("Document not found", HttpStatus.NOT_FOUND);
     }
 
     // ===============================
     // DELETE DOCUMENT BY NAME
     // ===============================
+
     @DeleteMapping("/name/{name}")
     public ResponseEntity<String> deleteDocumentByName(@PathVariable String name) {
 
@@ -230,6 +228,7 @@ public class DocumentController {
     // ===============================
     // DELETE ALL DOCUMENTS
     // ===============================
+
     @DeleteMapping
     public ResponseEntity<String> deleteAllDocuments() {
 
@@ -241,7 +240,9 @@ public class DocumentController {
 
         return new ResponseEntity<>("No documents available", HttpStatus.NO_CONTENT);
     }
-        // ---------- PAGINATION ----------
+
+    // ---------- PAGINATION ---------- //
+
     @GetMapping("/pagination")
     public ResponseEntity<Page<Document>> pagination(
             @RequestParam int page,
@@ -251,7 +252,8 @@ public class DocumentController {
                 documentService.getDocumentsWithPagination(page, size));
     }
 
-    // ---------- SORTING ----------
+    // ---------- SORTING ---------- //
+
     @GetMapping("/sorting")
     public ResponseEntity<List<Document>> sorting(
             @RequestParam String field,
@@ -261,7 +263,8 @@ public class DocumentController {
                 documentService.getDocumentsSorted(field, direction));
     }
 
-    // ---------- PAGINATION + SORTING ----------
+    // ---------- PAGINATION + SORTING ----------  //
+
     @GetMapping("/pagination-sorting")
     public ResponseEntity<Page<Document>> paginationSorting(
             @RequestParam int page,
@@ -274,12 +277,15 @@ public class DocumentController {
                         page, size, field, direction));
     }
 
-    // ---------- SORT BY ENTITY ----------
+    // ---------- SORT BY ENTITY ---------- //
+
     @GetMapping("/sort/docId")
     public ResponseEntity<List<Document>> sortByDocId(
             @RequestParam(defaultValue = "asc") String direction) {
         return ResponseEntity.ok(documentService.sortByDocId(direction));
     }
+
+    // ---------- SORT BY ENTITY ---------- //
 
     @GetMapping("/sort/docName")
     public ResponseEntity<List<Document>> sortByDocName(
@@ -287,11 +293,11 @@ public class DocumentController {
         return ResponseEntity.ok(documentService.sortByDocName(direction));
     }
 
+    // ---------- SORT BY ENTITY ---------- //
+    
     @GetMapping("/sort/uploadDate")
     public ResponseEntity<List<Document>> sortByUploadDate(
             @RequestParam(defaultValue = "asc") String direction) {
         return ResponseEntity.ok(documentService.sortByUploadDate(direction));
     }
-
-
 }

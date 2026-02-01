@@ -2,7 +2,6 @@ package com.examly.springapp.controller;
 
 import java.time.LocalDate;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -17,10 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.examly.springapp.model.Review;
 import com.examly.springapp.service.ReviewService;
-
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
@@ -149,6 +146,7 @@ public class ReviewController {
     // ===============================
     // PAGINATION + SORTING
     // ===============================
+
     @GetMapping("/page-sort")
     public ResponseEntity<Page<Review>> getReviewsWithPaginationAndSorting(
             @RequestParam int page,
@@ -166,6 +164,7 @@ public class ReviewController {
     // ===============================
     // SORT BY SPECIFIC FIELDS
     // ===============================
+
     @GetMapping("/sort/rating")
     public List<Review> sortByRating() {
         return reviewService.sortByRating();

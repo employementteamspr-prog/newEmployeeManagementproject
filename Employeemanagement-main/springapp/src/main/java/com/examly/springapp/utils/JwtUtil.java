@@ -11,7 +11,7 @@ import io.jsonwebtoken.security.Keys;
 
 @Component
 public class JwtUtil {
-    private final String SECRET="Employee Management System";
+    private final String SECRET="Employee Management System Project 1234567890 !";
     private final long EXPIRATION= 1000*60;
     private final Key secretKey= Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
 
