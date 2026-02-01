@@ -54,7 +54,7 @@ public class DailyPayrollController {
       }else {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
-    }
+}
     @GetMapping("/netSalary/{netSalary}")
     public ResponseEntity<DailyPayroll> getDailyPayrollByNetSalary(@PathVariable double netSalary) {
         Optional<DailyPayroll> payroll=dailyPayrollService.getDailyPayrollByNetSalary(netSalary);
